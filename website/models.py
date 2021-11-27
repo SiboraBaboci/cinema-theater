@@ -3,6 +3,9 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
+#this is a one to many relationship (one user has many notes) 
+#so the foreign key shown below is only for one to many relationships.
+
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(1000))
