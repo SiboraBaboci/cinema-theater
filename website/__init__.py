@@ -10,7 +10,10 @@ DB_NAME = "database.db"
 def create_app():
     app = Flask(__name__, template_folder='./template')
     app.config['SECRET_KEY'] = 'palma'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    #app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config[
+        "SQLALCHEMY_DATABASE_URI"
+    ] = "mysql+mysqldb://22_appweb_02:V4croAJy@mysql.lab.it.uc3m.es/22_appweb_02a"
     db.init_app(app)
 
     from .views import views
@@ -36,5 +39,6 @@ def create_app():
 
 def create_database(app):
     if not path.exists('website/' + DB_NAME):
+        db.drop_all(app=app)
         db.create_all(app=app)
         print('Created Database!')
