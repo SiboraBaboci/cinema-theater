@@ -38,6 +38,7 @@ def sign_up():
         first_name = request.form.get('firstName')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
+        role = request.form.get('role')
 
         user = User.query.filter_by(email=email).first()
         if user:
@@ -52,7 +53,7 @@ def sign_up():
             flash('Password must be at least 7 characters.', category = 'error')
         else:
             # User is the user class from model.py
-            new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='sha256'))
+            new_user = User(email=email, first_name=first_name, password=generate_password_hash(password1, method='sha256'), role=role)
             db.session.add(new_user)
             db.session.commit()
             flash('Account created.', category = 'success')

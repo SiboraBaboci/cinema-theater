@@ -19,6 +19,19 @@ class UserRole(enum.Enum):
     customer = 1
     manager = 2
 
+class Movie(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100),nullable=False)
+    synopsis = db.Column(db.String(200), nullable=False)
+    duration = db.Column(db.Integer, nullable=False)#in minutes 
+    director = db.Column(db.String(100), nullable=False)
+    main_cast = db.Column(db.String(200), nullable=False)
+
+class Screen(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.Integer,nullable=False)
+    capacity = db.Column(db.Integer, nullable=False)
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -35,4 +48,10 @@ class User(db.Model, UserMixin):
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    
+    projection_id = db.Column(db.Integer, db.ForeignKey("projection.id"), nullable=False)
+
+class Projection(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable=False)
+    screen_id = db.Column(db.Integer, db.ForeignKey("screen.id"), nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
