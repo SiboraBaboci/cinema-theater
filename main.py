@@ -5,9 +5,10 @@ app = create_app()
 #if we start the main page and nothing else, the main_view template is loaded into the skeleton
 @app.route("/")
 def open_main():
-    #location of the template might have to be specified further in order for the return statement to work
+    #location of the template might have to be specified further in order for the return statement to work (maybe '/additional templates/main_view.html')
     return render_template('main_view.html')
 
+#if we open the /movie page, the movie view is loaded into the skeleton
 @app.route("/movie")
 def open_movie():
     return render_template('movie_view.html')
