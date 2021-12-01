@@ -21,6 +21,7 @@ class UserRole(enum.Enum):
 
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    img_str = db.Column(db.String(2000),nullable=False)
     title = db.Column(db.String(100),nullable=False)
     synopsis = db.Column(db.String(200), nullable=False)
     duration = db.Column(db.Integer, nullable=False)#in minutes 
