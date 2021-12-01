@@ -13,9 +13,15 @@ def open_main():
 #if we open the /movie page, the movie view is loaded into the skeleton
 @app.route("/movie",  methods=['GET', 'POST'])
 def open_movie():
-    if request.method == 'GET':
-        notes = current_user.notes
-    return render_template('movie_view.html',  user=current_user, notes = notes)
+    return render_template('movie_view.html',  user=current_user)
+
+@app.route("/reservation",  methods=['GET', 'POST'])
+def open_reservation():
+    return render_template('reservation_view.html',  user=current_user)
+
+@app.route("/customer",  methods=['GET', 'POST'])
+def open_customer():
+    return render_template('customer_view.html',  user=current_user)
 
 if __name__ == '__main__':
     app.run(debug=True)
