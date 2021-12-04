@@ -7,6 +7,9 @@ insert into movie values('dune1.jpeg','Dune','Paul Atreides, a brilliant and gif
 INSERT INTO movie (img_str,title,synopsis,duration,director,main_cast) VALUES('%','dune1.jpeg','Dune','Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.','155','Denis Villeneuve', 'Timothée Chalamet, Zendaya, Rebecca Ferguson');
 
 
+insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("./static/img/dune1.jpeg","Dune","Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.",155,"Denis Villeneuve","Timothée Chalamet, Zendaya, Rebecca Ferguson");
+
+
 from cinema-theater import db, create_app, model
 app = create_app()
 app.app_context().push()
