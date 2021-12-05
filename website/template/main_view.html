@@ -14,7 +14,7 @@
 
   <form> 
     <input type="search" placeholder="Search...">
-    <button>Search</button>
+    <button class="btn btn-primary">Search</button>
   </form>
 
   <h1>Today</h1>
@@ -22,13 +22,13 @@
   <div class="container">
     <div class="row">
 
-      {% for movie in past_movies %}
+      {% for projection in past_projections %}
       <div class="col-sm">
         <div class="card" style="width: 13rem;">
-          <img class="card-img-top" src="{{movie.img_str}}"  alt="Card image cap">
+          <img class="card-img-top" src="{{projection.movie_img_str}}"  alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">{{movie.title}} </h5>
-            <button class="btn btn-dark" onclick="window.location.href = `/movie/{{movie.id}}`">See movie details</button>
+            <h5 class="card-title">{{projection.movie_title}} </h5>
+            <button class="btn btn-dark" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
           </div>
         </div>
       </div>
@@ -43,13 +43,13 @@
 
   <div class="container">
     <div class="row">
-      {% for movie in future_movies %}
+      {% for projection in future_projections_list %}
       <div class="col-sm">
         <div class="card" style="width: 13rem;">
-          <img class="card-img-top" src="{{movie.img_str}}"  alt="Card image cap">
+          <img class="card-img-top" src="{{projection.movie_img_str}}"  alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">{{movie.title}} </h5>
-            <button class="btn btn-dark" onclick="window.location.href = `/movie/{{movie.id}}`">See movie details</button>
+            <h5 class="card-title">{{projection.movie_title}} </h5>
+            <button class="btn btn-dark" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
           </div>
         </div>
       </div>

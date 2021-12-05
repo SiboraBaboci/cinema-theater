@@ -60,5 +60,7 @@ class Projection(db.Model):
 
     # insert into movie (img_str,title,synopsis,duration,director,main_cast) values ('./static/img/matrix.jpg','matrix','best movie',140,'sibora','sibo'); 
     # delete from movie where movie.title = 'Dune'; 
-   #  insert into screen (number,capacity) values (100, 50);
+    # insert into screen (number,capacity) values (100, 50);
+    # insert into projection (movie_id,screen_id, date) values (2,2,'2021-11-25'); 
+    # update movie set img_str = "../static/img/noTimeToDie.jpg" where movie.title="No Time To Die"; 
 

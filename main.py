@@ -1,7 +1,7 @@
 from website import create_app
 from flask import Blueprint, render_template, request, flash
 from flask_login import login_required, current_user
-from website.models import Movie, Projection
+from website.models import Movie, Projection, Screen
 from datetime import date
 from sqlalchemy import func
 
@@ -11,34 +11,69 @@ app = create_app()
 @app.route("/main")
 def open_main():
     past_projections = Projection.query.filter(func.DATE(Projection.date)<=date.today())
-    past_movie_ids =[] 
+    past_projections_object = [] 
     for projection in past_projections:
-        past_movie_ids.append(projection.movie_id)
+        current_movie = Movie.query.get(projection.movie_id)
+        projection_dict ={
+            "movie_id": current_movie.id,
+            "movie_img_str": current_movie.img_str,
+            "movie_title": current_movie.title,
+            "movie_synopsis": current_movie.synopsis,
+            "movie_duration": current_movie.duration,
+            "movie_director": current_movie.director,
+            "movie_main_cast": current_movie.main_cast,
 
-    past_movies = []  
-    for past_movie_id in past_movie_ids:
-        past_movies.append(Movie.query.get(past_movie_id))
+            "projection_id": projection.id,
+            "projection_date": projection.date
+        } 
+        
+        past_projections_object.append(projection_dict)
+    past_projections_list = (list({obj["movie_id"]:obj for obj in past_projections_object}.values()))
+    print(past_projections_list)
+
 
 
     future_projections = Projection.query.filter(func.DATE(Projection.date)>=date.today())
-    future_movie_ids =[] 
+    future_projections_object = [] 
     for projection in future_projections:
-        future_movie_ids.append(projection.movie_id)
+        current_movie = Movie.query.get(projection.movie_id)
+        projection_dict ={
+            "movie_id": current_movie.id,
+            "movie_img_str": current_movie.img_str,
+            "movie_title": current_movie.title,
+            "movie_synopsis": current_movie.synopsis,
+            "movie_duration": current_movie.duration,
+            "movie_director": current_movie.director,
+            "movie_main_cast": current_movie.main_cast,
 
-    future_movies = []  
-    for future_movie_id in future_movie_ids:
-        future_movies.append(Movie.query.get(future_movie_id))
-
+            "projection_id": projection.id,
+            "projection_date": projection.date
+        } 
+        future_projections_object.append(projection_dict)
+    future_projections_list = (list({obj["movie_id"]:obj for obj in future_projections_object}.values()))
+    print(future_projections_list)
     
     #location of the template might have to be specified further in order for the return statement to work (maybe '/additional templates/main_view.html')
-    return render_template('main_view.html', user=current_user, past_movies = past_movies, future_movies = future_movies)
+    return render_template('main_view.html', user=current_user, past_projections=past_projections_list, future_projections_list=future_projections_list)
 
 #if we open the /movie page, the movie view is loaded into the skeleton
 @app.route("/movie/<movie_id>",  methods=['GET', 'POST'])
 def open_movie(movie_id):
-    movie = Movie.query.filter_by(id = movie_id).first()
-    print(movie.img_str)
-    return render_template('movie_view.html',  user=current_user, movie = movie)
+
+    projection = Projection.query.filter_by(movie_id = movie_id).first()
+    current_movie = Movie.query.get(movie_id)
+    current_screen = Screen.query.get(projection.screen_id)
+    projection_dict ={
+        "screen_id": current_screen.id,
+        "screen_number": current_screen.number,
+        "screen_capacity": current_screen.capacity,
+
+        "projection_id": projection.id,
+        "projection_date": projection.date
+    } 
+   
+    print(projection_dict["movie_img_str"])
+    return render_template('movie_view.html',  user=current_user, projection=projection_dict, movie = current_movie)
 
 @app.route("/reservation",  methods=['GET', 'POST'])
 @login_required
