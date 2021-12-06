@@ -19,16 +19,56 @@
 {% block content %}
 <body class="overflow-auto">
 <h1>Upcoming reservations</h1>
-    <ul>
-        <li>Res1</li>
-        <li>Res1</li>
-        <li>Res1</li>
-        <li>Res1</li>
-        <li>Res1</li>
-    </ul>
 
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Movie Title</th>
+    <th>Screen Number</th>
+    <th>Projection Date</th>
+    <th>Reservation Owner</th>
+    <th>Number of Seats</th>
+    <th>Confirmation Date</th>
+  </tr>
+
+  {% for object in reservation %}
+    <tr>
+      <td>{{object.ID}}</td>
+      <td>{{object.movie_title}}</td>
+      <td>{{object.screen_number}}</td>
+      <td>{{object.projection_date}}</td>
+      <td>{{object.reservation_owner}}</td>
+      <td>{{object.no_of_seats}}</td>
+      <td>{{object.confirmation_date}}</td>
+    </tr>
+  {% endfor %}
+</table> 
 
 <h1>Past reservations</h1>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Movie Title</th>
+    <th>Screen Number</th>
+    <th>Projection Date</th>
+    <th>Reservation Owner</th>
+    <th>Number of Seats</th>
+    <th>Confirmation Date</th>
+  </tr>
+
+  {% for object in reservation %}
+    <tr>
+      <td>{{object.ID}}</td>
+      <td>{{object.movie_title}}</td>
+      <td>{{object.screen_number}}</td>
+      <td>{{object.projection_date}}</td>
+      <td>{{object.reservation_owner}}</td>
+      <td>{{object.no_of_seats}}</td>
+      <td>{{object.confirmation_date}}</td>
+    </tr>
+  {% endfor %}
+</table> 
 
 </body>
 
