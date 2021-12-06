@@ -50,6 +50,8 @@ class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     projection_id = db.Column(db.Integer, db.ForeignKey("projection.id"), nullable=False)
+    # no_of_seats = db.Column(db.Integer, nullable=False)
+    # date = db.Column(db.DateTime, nullable=False)
 
 class Projection(db.Model):
     id = db.Column(db.Integer, primary_key=True)

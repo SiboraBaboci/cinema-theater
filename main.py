@@ -72,7 +72,6 @@ def open_movie(movie_id):
         "projection_date": projection.date
     } 
    
-    print(projection_dict["movie_img_str"])
     return render_template('movie_view.html',  user=current_user, projection=projection_dict, movie = current_movie)
 
 @app.route("/reservation",  methods=['GET', 'POST'])
@@ -83,18 +82,49 @@ def open_reservation():
 @app.route("/customer",  methods=['GET', 'POST'])
 @login_required
 def open_customer():
+    reservations = current_user.reservations
 
-    reservation_dict = { 
-        "ID": ,
-        "movie_title": ,
-        "screen_number": ,
-        "projection_date": ,
-        "reservation_owner": ,
-        "no_of_seats": ,
-        "confirmation_date" 
-    }
+    past_reservation_list =[] 
 
-    return render_template('customer_view.html',  reservation = ...)
+    for reservation in reservations:
+        current_projection = Projection.query.get(reservation.projection_id)
+        current_movie = Movie.query.get(current_projection.movie_id)
+        current_screen = Screen.query.get(current_projection.screen_id)
+
+
+        past_reservation_dict = { 
+            "ID": reservation.id,
+            "movie_title": current_movie.title,
+            "screen_number": current_screen.number,
+            "projection_date": current_projection.date,
+            "reservation_owner": reservation.user.first_name,
+            # "no_of_seats": reservation.no_of_seats,
+            # "confirmation_date": reservation.date 
+        }
+
+        past_reservation_list.append(past_reservation_dict)
+
+    future_reservation_list =[] 
+
+    for reservation in reservations:
+        current_projection = Projection.query.get(reservation.projection_id)
+        current_movie = Movie.query.get(current_projection.movie_id)
+        current_screen = Screen.query.get(current_projection.screen_id)
+
+
+        future_reservation_dict = { 
+            "ID": reservation.id,
+            "movie_title": current_movie.title,
+            "screen_number": current_screen.number,
+            "projection_date": current_projection.date,
+            "reservation_owner": reservation.user.first_name,
+            # "no_of_seats": reservation.no_of_seats,
+            # "confirmation_date": reservation.date 
+        }
+
+        future_reservation_list.append(future_reservation_dict)
+
+    return render_template('customer_view.html', user=current_user, past_reservations=past_reservation_list, future_reservations=future_reservation_list)
 
 if __name__ == '__main__':
     app.run(debug=True)
