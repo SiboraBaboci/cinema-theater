@@ -83,7 +83,18 @@ def open_reservation():
 @app.route("/customer",  methods=['GET', 'POST'])
 @login_required
 def open_customer():
-    return render_template('customer_view.html',  user=current_user)
+
+    reservation_dict = { 
+        "ID": ,
+        "movie_title": ,
+        "screen_number": ,
+        "projection_date": ,
+        "reservation_owner": ,
+        "no_of_seats": ,
+        "confirmation_date" 
+    }
+
+    return render_template('customer_view.html',  reservation = ...)
 
 if __name__ == '__main__':
     app.run(debug=True)
