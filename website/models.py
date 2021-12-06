@@ -64,3 +64,5 @@ class Projection(db.Model):
     # insert into projection (movie_id,screen_id, date) values (2,2,'2021-11-25'); 
     # update movie set img_str = "../static/img/noTimeToDie.jpg" where movie.title="No Time To Die"; 
 
+    # insert into reservation (user_id,projection_id) values (1, 1);
+
