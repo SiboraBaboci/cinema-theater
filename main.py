@@ -5,6 +5,7 @@ from website.models import Movie, Projection, Screen, UserRole
 from datetime import datetime
 from sqlalchemy import func
 
+
 app = create_app()
 
 #if we start the main page and nothing else, the main_view template is loaded into the skeleton
