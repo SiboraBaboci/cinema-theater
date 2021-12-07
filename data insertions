@@ -1,12 +1,3 @@
-Dune, 155, 'Denis Villeneuve', 'Timothée Chalamet, Zendaya, Rebecca Ferguson'
-
-Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.
-
-insert into movie values('dune1.jpeg','Dune','Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.','155','Denis Villeneuve', 'Timothée Chalamet, Zendaya, Rebecca Ferguson')
-
-INSERT INTO movie (img_str,title,synopsis,duration,director,main_cast) VALUES('%','dune1.jpeg','Dune','Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.','155','Denis Villeneuve', 'Timothée Chalamet, Zendaya, Rebecca Ferguson');
-
-
 
 insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("../static/img/dune1.jpeg","Dune","Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.",155,"Denis Villeneuve","Timothée Chalamet, Zendaya, Rebecca Ferguson");
 insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("../static/img/annette.jpg","Annette","Henry is a stand-up comedian with a fierce sense of humor who falls in love with Ann, a world-renowned opera singer. Under the spotlight, they form a passionate and glamorous couple. With the birth of their first child -- a mysterious little girl with an exceptional destiny -- their lives are turned upside down.",139,"Leos Carax","Adam Driver, Leos Carax, Marion Cotillard");
@@ -43,6 +34,10 @@ insert into reservation (user_id,projection_id, no_of_seats, conf_date) values (
 
 
 
+
+
+
+
 from cinema-theater import db, create_app, model
 app = create_app()
 app.app_context().push()
@@ -63,17 +58,3 @@ ins = users.insert().values(img_str='dune1.jpeg', title="Dune", synopsis='Paul A
 )
 ins.compile().params  
 
-
-
-Anette, 139, Leos Carax; Adam Driver, Leos Carax, Marion Cotillard
-
-Henry is a stand-up comedian with a fierce sense of humor who falls in love with Ann, a world-renowned opera singer. Under the spotlight, they form a passionate and glamorous couple. With the birth of their first child -- a mysterious little girl with an exceptional destiny -- their lives are turned upside down.
-
-Inception, 148, Christoper Nolan; Leonardo DiCaprio, Joseph Gordon-Levitt, Tom Hardy
-Dom Cobb (Leonardo DiCaprio) is a thief with the rare ability to enter people's dreams and steal their secrets from their subconscious. His skill has made him a hot commodity in the world of corporate espionage but has also cost him everything he loves. Cobb gets a chance at redemption when he is offered a seemingly impossible task: Plant an idea in someone's mind. If he succeeds, it will be the perfect crime, but a dangerous enemy anticipates Cobb's every move.
-
-The Matrix, 136, Lana Wachowski; Keanu Reeves, Carrie-Ann Moss, Laurence Fishburne
-Neo (Keanu Reeves) believes that Morpheus (Laurence Fishburne), an elusive figure considered to be the most dangerous man alive, can answer his question -- What is the Matrix? Neo is contacted by Trinity (Carrie-Anne Moss), a beautiful stranger who leads him into an underworld where he meets Morpheus. They fight a brutal battle for their lives against a cadre of viciously intelligent secret agents. It is a truth that could cost Neo something more precious than his life.
-
-Interstellar, 169,Christopher Nolan; Matthew McConaughey, Anne Hathaway, Jessica Chastain
-In Earth's future, a global crop blight and second Dust Bowl are slowly rendering the planet uninhabitable. Professor Brand (Michael Caine), a brilliant NASA physicist, is working on plans to save mankind by transporting Earth's population to a new home via a wormhole. But first, Brand must send former NASA pilot Cooper (Matthew McConaughey) and a team of researchers through the wormhole and across the galaxy to find out which of three planets could be mankind's new home.
