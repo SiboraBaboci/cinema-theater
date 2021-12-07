@@ -98,8 +98,8 @@ def open_customer():
             "screen_number": current_screen.number,
             "projection_date": current_projection.date,
             "reservation_owner": reservation.user.first_name,
-            # "no_of_seats": reservation.no_of_seats,
-            # "confirmation_date": reservation.date 
+            "no_of_seats": reservation.no_of_seats,
+            "confirmation_date": reservation.conf_date 
         }
 
         past_reservation_list.append(past_reservation_dict)
@@ -118,8 +118,8 @@ def open_customer():
             "screen_number": current_screen.number,
             "projection_date": current_projection.date,
             "reservation_owner": reservation.user.first_name,
-            # "no_of_seats": reservation.no_of_seats,
-            # "confirmation_date": reservation.date 
+            "no_of_seats": reservation.no_of_seats,
+            "confirmation_date": reservation.conf_date 
         }
 
         future_reservation_list.append(future_reservation_dict)

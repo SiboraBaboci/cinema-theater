@@ -50,8 +50,8 @@ class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     projection_id = db.Column(db.Integer, db.ForeignKey("projection.id"), nullable=False)
-    # no_of_seats = db.Column(db.Integer, nullable=False)
-    # date = db.Column(db.DateTime, nullable=False)
+    no_of_seats = db.Column(db.Integer, nullable=False)
+    conf_date = db.Column(db.DateTime, nullable=False)
 
 class Projection(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -63,7 +63,7 @@ class Projection(db.Model):
     # insert into movie (img_str,title,synopsis,duration,director,main_cast) values ('./static/img/matrix.jpg','matrix','best movie',140,'sibora','sibo'); 
     # delete from movie where movie.title = 'Dune'; 
     # insert into screen (number,capacity) values (100, 50);
-    # insert into projection (movie_id,screen_id, date) values (2,2,'2021-11-25'); 
+    # insert into projection (movie_id,screen_id, date) values (2,2,'2021-11-25 20:30:00'); 
     # update movie set img_str = "../static/img/noTimeToDie.jpg" where movie.title="No Time To Die"; 
 
     # insert into reservation (user_id,projection_id) values (1, 1);
