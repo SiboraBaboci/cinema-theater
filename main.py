@@ -1,16 +1,17 @@
 from website import create_app
 from flask import Blueprint, render_template, request, flash
 from flask_login import login_required, current_user
-from website.models import Movie, Projection, Screen
-from datetime import date
+from website.models import Movie, Projection, Screen, UserRole
+from datetime import datetime
 from sqlalchemy import func
 
 app = create_app()
 
 #if we start the main page and nothing else, the main_view template is loaded into the skeleton
+@app.route("/")
 @app.route("/main")
 def open_main():
-    past_projections = Projection.query.filter(func.DATE(Projection.date)<=date.today())
+    past_projections = Projection.query.filter(func.DATE(Projection.date)<=datetime.today())
     past_projections_object = [] 
     for projection in past_projections:
         current_movie = Movie.query.get(projection.movie_id)
@@ -33,7 +34,7 @@ def open_main():
 
 
 
-    future_projections = Projection.query.filter(func.DATE(Projection.date)>=date.today())
+    future_projections = Projection.query.filter(func.DATE(Projection.date)>=datetime.today())
     future_projections_object = [] 
     for projection in future_projections:
         current_movie = Movie.query.get(projection.movie_id)
@@ -51,10 +52,9 @@ def open_main():
         } 
         future_projections_object.append(projection_dict)
     future_projections_list = (list({obj["movie_id"]:obj for obj in future_projections_object}.values()))
-    print(future_projections_list)
     
     #location of the template might have to be specified further in order for the return statement to work (maybe '/additional templates/main_view.html')
-    return render_template('main_view.html', user=current_user, past_projections=past_projections_list, future_projections_list=future_projections_list)
+    return render_template('main_view.html', user=current_user,  UserRole=UserRole, past_projections=past_projections_list, future_projections_list=future_projections_list)
 
 #if we open the /movie page, the movie view is loaded into the skeleton
 @app.route("/movie/<movie_id>",  methods=['GET', 'POST'])
@@ -72,21 +72,34 @@ def open_movie(movie_id):
         "projection_date": projection.date
     } 
    
-    return render_template('movie_view.html',  user=current_user, projection=projection_dict, movie = current_movie)
+    return render_template('movie_view.html', UserRole=UserRole, user=current_user, projection=projection_dict, movie = current_movie)
 
 @app.route("/reservation",  methods=['GET', 'POST'])
 @login_required
 def open_reservation():
-    return render_template('reservation_view.html',  user=current_user)
+    return render_template('reservation_view.html',  user=current_user , UserRole=UserRole)
 
 @app.route("/customer",  methods=['GET', 'POST'])
 @login_required
 def open_customer():
     reservations = current_user.reservations
 
+    # split from all reservations into past and future list   
+    reservation_list_past = [] 
+    for res in reservations:
+        if res.conf_date <= datetime.today():
+            reservation_list_past.append(res)
+
+    reservation_list_future = [] 
+    for res in reservations:
+        if res.conf_date >= datetime.today():
+            reservation_list_future.append(res)        
+
+
+
     past_reservation_list =[] 
 
-    for reservation in reservations:
+    for reservation in reservation_list_past:
         current_projection = Projection.query.get(reservation.projection_id)
         current_movie = Movie.query.get(current_projection.movie_id)
         current_screen = Screen.query.get(current_projection.screen_id)
@@ -106,7 +119,7 @@ def open_customer():
 
     future_reservation_list =[] 
 
-    for reservation in reservations:
+    for reservation in reservation_list_future:
         current_projection = Projection.query.get(reservation.projection_id)
         current_movie = Movie.query.get(current_projection.movie_id)
         current_screen = Screen.query.get(current_projection.screen_id)
@@ -124,7 +137,7 @@ def open_customer():
 
         future_reservation_list.append(future_reservation_dict)
 
-    return render_template('customer_view.html', user=current_user, past_reservations=past_reservation_list, future_reservations=future_reservation_list)
+    return render_template('customer_view.html', user=current_user, UserRole=UserRole, past_reservations=past_reservation_list, future_reservations=future_reservation_list)
 
 if __name__ == '__main__':
     app.run(debug=True)
