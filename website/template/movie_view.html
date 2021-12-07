@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+
+<head>
+  <title>movie</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+{% block content %}
+<body class="overflow-auto">
+    <div class="media">
+        <div class="media-body">         
+          <h1 class="mt-0">{{movie.title}}  </h1>
+          <h2> {{movie.director}} :{{movie.main_cast}}</h2>
+          <h3> {{movie.duration}}</h3>
+          <p>{{movie.synopsis}}</p>
+        </div>
+        <img class="align-self-start mr-3 img-fluid" style="width: 13rem;" src="{{movie.img_str}}" alt="Generic placeholder image">
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+
+</body>
+
+
+
+{% endblock %}

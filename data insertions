@@ -1,0 +1,60 @@
+
+insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("../static/img/dune1.jpeg","Dune","Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.",155,"Denis Villeneuve","Timothée Chalamet, Zendaya, Rebecca Ferguson");
+insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("../static/img/annette.jpg","Annette","Henry is a stand-up comedian with a fierce sense of humor who falls in love with Ann, a world-renowned opera singer. Under the spotlight, they form a passionate and glamorous couple. With the birth of their first child -- a mysterious little girl with an exceptional destiny -- their lives are turned upside down.",139,"Leos Carax","Adam Driver, Leos Carax, Marion Cotillard");
+insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("../static/img/interstellar.jpeg","Interstellar","In Earth's future, a global crop blight and second Dust Bowl are slowly rendering the planet uninhabitable. Professor Brand (Michael Caine), a brilliant NASA physicist, is working on plans to save mankind by transporting Earth's population to a new home via a wormhole. But first, Brand must send former NASA pilot Cooper (Matthew McConaughey) and a team of researchers through the wormhole and across the galaxy to find out which of three planets could be mankind's new home.",169,"Christopher Nolan","Matthew McConaughey, Anne Hathaway, Jessica Chastain");
+insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("../static/img/encanto.jpeg","Encanto","The Madrigals are an extraordinary family who live hidden in the mountains of Colombia in a charmed place called the Encanto. The magic of the Encanto has blessed every child in the family with a unique gift -- every child except Mirabel. However, she soon may be the Madrigals last hope when she discovers that the magic surrounding the Encanto is now in danger.",99,"Byron Howard, Jared Bush","Stephanie Beatriz, Diane Guerrero, Wilmer Valderrama");
+insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("../static/img/noTimeToDie.jpg","No Time To Die","James Bond is enjoying a tranquil life in Jamaica after leaving active service. However, his peace is short-lived as his old CIA friend, Felix Leiter, shows up and asks for help. The mission to rescue a kidnapped scientist turns out to be far more treacherous than expected, leading Bond on the trail of a mysterious villain who's armed with a dangerous new technology.",163,"Cary Joji Fukunaga","Daniel Craig, Rami Malek, Ana de Armas");
+insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("../static/img/redNotice.jpeg","Red Notice","In the world of international crime, an Interpol agent attempts to hunt down and capture the world's most wanted art thief.",115,"Rawson Marshall Thurber","Gal Gadot, Dwayne Johnson, Ryan Reynolds");
+
+insert into screen (number, capacity) values (100, 50);
+insert into screen (number, capacity) values (200, 50);
+insert into screen (number, capacity) values (300, 40);
+insert into screen (number, capacity) values (400, 40);
+insert into screen (number, capacity) values (500, 45);
+
+insert into projection (movie_id,screen_id, date) values (1,2,'2021-11-25 20:30:00');
+insert into projection (movie_id,screen_id, date) values (1,2,'2021-09-25 16:30:00');
+insert into projection (movie_id,screen_id, date) values (2,4,'2021-11-25 17:30:00');
+insert into projection (movie_id,screen_id, date) values (5,3,'2021-12-11 21:30:00');
+insert into projection (movie_id,screen_id, date) values (3,1,'2021-12-23 20:30:00');
+insert into projection (movie_id,screen_id, date) values (4,5,'2021-12-27 18:45:00');
+insert into projection (movie_id,screen_id, date) values (6,4,'2021-12-29 22:45:00');
+insert into projection (movie_id,screen_id, date) values (1,5,'2021-12-26 21:30:00');
+insert into projection (movie_id,screen_id, date) values (2,3,'2021-12-25 19:30:00');
+insert into projection (movie_id,screen_id, date) values (3,1,'2021-11-02 21:50:00');
+insert into projection (movie_id,screen_id, date) values (4,5,'2021-11-15 18:30:00');
+insert into projection (movie_id,screen_id, date) values (6,4,'2021-10-19 21:00:00');
+
+insert into reservation (user_id,projection_id, no_of_seats, conf_date) values (1, 1, 2, '2021-11-15 14:25:00');
+insert into reservation (user_id,projection_id, no_of_seats, conf_date) values (2, 6, 5, '2021-12-04 22:17:20');
+insert into reservation (user_id,projection_id, no_of_seats, conf_date) values (3, 4, 3, '2021-12-01 20:11:40');
+insert into reservation (user_id,projection_id, no_of_seats, conf_date) values (3, 6, 2, '2021-11-30 11:30:40');
+insert into reservation (user_id,projection_id, no_of_seats, conf_date) values (2, 10, 4, '2021-12-01 18:30:00');
+insert into reservation (user_id,projection_id, no_of_seats, conf_date) values (1, 12, 2, '2021-12-01 18:30:00');
+
+
+
+
+
+
+
+from cinema-theater import db, create_app, model
+app = create_app()
+app.app_context().push()
+import datetime
+import dateutil
+user = model.movie(img_str='dune1.jpeg', title="Dune", synopsis='Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.',duration=155,director='Denis Villeneuve',main_cast='Timothée Chalamet, Zendaya, Rebecca Ferguson')
+db.session.commit()
+
+from sqlalchemy import insert
+
+stmt = (
+    insert(movie).
+    values(img_str='dune1.jpeg', title="Dune", synopsis='Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.',duration=155,director='Denis Villeneuve',main_cast='Timothée Chalamet, Zendaya, Rebecca Ferguson')
+)
+
+ins = users.insert()
+ins = users.insert().values(img_str='dune1.jpeg', title="Dune", synopsis='Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.',duration=155,director='Denis Villeneuve',main_cast='Timothée Chalamet, Zendaya, Rebecca Ferguson')
+)
+ins.compile().params  
+

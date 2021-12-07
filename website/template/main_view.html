@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+  <title>main</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body class="overflow-auto">
+
+  <form> 
+    <input type="search" placeholder="Search...">
+    <button class="btn btn-primary">Search</button>
+  </form>
+
+  <h1>Today</h1>
+
+  <div class="container">
+    <div class="row">
+
+      {% for projection in past_projections %}
+      <div class="col-sm">
+        <div class="card" style="width: 13rem;">
+          <img class="card-img-top" src="{{projection.movie_img_str}}"  alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{projection.movie_title}} </h5>
+            <button class="btn btn-dark" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1>Next Days</h1>
+
+  <div class="container">
+    <div class="row">
+      {% for projection in future_projections_list %}
+      <div class="col-sm">
+        <div class="card" style="width: 13rem;">
+          <img class="card-img-top" src="{{projection.movie_img_str}}"  alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{projection.movie_title}} </h5>
+            <button class="btn btn-dark" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      
+    </div>
+  </div>
+
+</body>
+
+
+
+{% endblock %}
