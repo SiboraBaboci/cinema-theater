@@ -61,19 +61,46 @@ def open_main():
 @app.route("/movie/<movie_id>",  methods=['GET', 'POST'])
 def open_movie(movie_id):
 
-    projection = Projection.query.filter_by(movie_id = movie_id).first()
-    current_movie = Movie.query.get(movie_id)
-    current_screen = Screen.query.get(projection.screen_id)
-    projection_dict ={
-        "screen_id": current_screen.id,
-        "screen_number": current_screen.number,
-        "screen_capacity": current_screen.capacity,
+    projections = Projection.query.filter_by(movie_id = movie_id)
 
-        "projection_id": projection.id,
-        "projection_date": projection.date
-    } 
+    past_projections = [] 
+
+    for projection in projections:
+
+        if projection.date  <= datetime.today():
+
+            current_movie = Movie.query.get(movie_id)
+            current_screen = Screen.query.get(projection.screen_id)
+            projection_dict ={
+                "screen_id": current_screen.id,
+                "screen_number": current_screen.number,
+                "screen_capacity": current_screen.capacity,
+
+                "projection_id": projection.id,
+                "projection_date": projection.date
+            } 
+            past_projections.append(projection_dict)
+
+
+    future_projections = [] 
+
+    for projection in projections:
+
+        if projection.date  >= datetime.today():
+
+            current_movie = Movie.query.get(movie_id)
+            current_screen = Screen.query.get(projection.screen_id)
+            projection_dict ={
+                "screen_id": current_screen.id,
+                "screen_number": current_screen.number,
+                "screen_capacity": current_screen.capacity,
+
+                "projection_id": projection.id,
+                "projection_date": projection.date
+            } 
+            future_projections.append(projection_dict)
    
-    return render_template('movie_view.html', UserRole=UserRole, user=current_user, projection=projection_dict, movie = current_movie)
+    return render_template('movie_view.html', UserRole=UserRole, user=current_user, past_projection=past_projections, future_projections = future_projections, movie = current_movie)
 
 @app.route("/reservation",  methods=['GET', 'POST'])
 @login_required
@@ -98,7 +125,7 @@ def open_customer():
 
 
 
-    past_reservation_list =[] 
+    past_reservation_list = [] 
 
     for reservation in reservation_list_past:
         current_projection = Projection.query.get(reservation.projection_id)
@@ -118,7 +145,7 @@ def open_customer():
 
         past_reservation_list.append(past_reservation_dict)
 
-    future_reservation_list =[] 
+    future_reservation_list = [] 
 
     for reservation in reservation_list_future:
         current_projection = Projection.query.get(reservation.projection_id)

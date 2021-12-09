@@ -23,36 +23,87 @@
         <img class="align-self-start mr-3 img-fluid" style="width: 13rem;" src="{{movie.img_str}}" alt="Generic placeholder image">
       </div>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
+    <h1>Todays Projections</h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+         
+          <th scope="col">Screen capacity</th>
+
+          <th scope="col">Projection date</th>
+          <th scope="col"></th>
+
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for projection in past_projection %}
+        <tr>
+          
+          <td>{{projection.screen_capacity}}</td>
+          <td>{{projection.projection_date}}</td>
+          <td>
+            {% if user.is_authenticated %}
+            <div class="input-group mb-3 w-75">
+              <input type="text" class="form-control" placeholder="Number of seats">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">Make reservation</button>
+              </div>
+            </div>
+           {% endif %} 
+          </td>
+          <td>
+            {% if not user.is_authenticated %}
+            Please login to make reservations
+           {% endif %} 
+          </td>
+        </tr>
+        {% endfor %}
+      
+      </tbody>
+    </table>
+
+    <h1>Next Projections</h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          
+          <th scope="col">Screen capacity</th>
+
+          <th scope="col">Projection date</th>
+          <th scope="col"></th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for projection in future_projections %}
+        <tr>
+          
+          <td>{{projection.screen_capacity}}</td>
+          <td>{{projection.projection_date}}</td>
+          <td>  
+            {% if user.is_authenticated %}
+            <div class="input-group mb-3 w-75">
+              <input type="text" class="form-control" placeholder="Number of seats">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">Make reservation</button>
+              </div>
+            </div>
+          {% endif %} 
+          </td>
+          <td>
+            {% if not user.is_authenticated %}
+            Please login to make reservations
+           {% endif %} 
+          </td>
+          
+        </tr>
+        {% endfor %}
+      
+      </tbody>
+    </table>
 
 </body>
 
