@@ -45,12 +45,14 @@
           <td>{{projection.projection_date}}</td>
           <td>
             {% if user.is_authenticated %}
-            <div class="input-group mb-3 w-75">
-              <input type="text" class="form-control" placeholder="Number of seats">
+            <form method="POST">
+            <div class="input-group mb-3 w-75" method='POST'>
+              <input type="number" min="1" max="{{projection.screen_capacity}}" class="form-control" placeholder="Number of seats" id="no_seats" name="no_seats">
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button">Make reservation</button>
+                <button class="btn btn-primary"  type="submit">Make reservation</button>
               </div>
             </div>
+          </form>
            {% endif %} 
           </td>
           <td>
@@ -85,12 +87,14 @@
           <td>{{projection.projection_date}}</td>
           <td>  
             {% if user.is_authenticated %}
-            <div class="input-group mb-3 w-75">
-              <input type="text" class="form-control" placeholder="Number of seats">
+            <form method="POST">
+            <div class="input-group mb-3 w-75" method='POST'>
+              <input type="number" min="1" max="{{projection.screen_capacity}}" class="form-control" placeholder="Number of seats" id="no_seats" name="no_seats">
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button">Make reservation</button>
+                <button class="btn btn-primary" type="submit">Make reservation</button>
               </div>
             </div>
+          </form>
           {% endif %} 
           </td>
           <td>

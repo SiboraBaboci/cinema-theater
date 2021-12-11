@@ -1,7 +1,8 @@
 from website import create_app
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from website.models import Movie, Projection, Screen, UserRole
+from website.models import Movie, Projection, Screen, UserRole, Reservation
+from website import db
 from datetime import datetime
 from sqlalchemy import func
 
@@ -64,6 +65,7 @@ def open_movie(movie_id):
     projections = Projection.query.filter_by(movie_id = movie_id)
 
     past_projections = [] 
+    future_projections = [] 
 
     for projection in projections:
 
@@ -75,30 +77,53 @@ def open_movie(movie_id):
                 "screen_id": current_screen.id,
                 "screen_number": current_screen.number,
                 "screen_capacity": current_screen.capacity,
-
                 "projection_id": projection.id,
                 "projection_date": projection.date
             } 
             past_projections.append(projection_dict)
 
+          # TODO: registers wrong check it here  
 
-    future_projections = [] 
+            no_of_seats = ''
+            if request.method == 'POST':
 
-    for projection in projections:
+                no_of_seats = request.form.get('no_seats')
+                new_reservation = Reservation(user_id=current_user.id, projection_id=projection.id, no_of_seats=no_of_seats, conf_date=datetime.today())
+                db.session.add(new_reservation)
+                db.session.commit()
+                flash('Reservation saved.', category = 'success')
+                
+                return redirect(url_for('open_customer'))
 
-        if projection.date  >= datetime.today():
 
+        elif projection.date  >= datetime.today():
             current_movie = Movie.query.get(movie_id)
             current_screen = Screen.query.get(projection.screen_id)
             projection_dict ={
                 "screen_id": current_screen.id,
                 "screen_number": current_screen.number,
                 "screen_capacity": current_screen.capacity,
-
                 "projection_id": projection.id,
                 "projection_date": projection.date
             } 
             future_projections.append(projection_dict)
+
+            no_of_seats = ''
+            if request.method == 'POST':
+
+                no_of_seats = ''
+                if request.method == 'POST':
+
+                    no_of_seats = request.form.get('no_seats')
+                    new_reservation = Reservation(user_id=current_user.id, projection_id=projection.id, no_of_seats=no_of_seats, conf_date=datetime.today())
+                    db.session.add(new_reservation)
+                    db.session.commit()
+                    flash('Reservation saved.', category = 'success')
+                    
+                    return redirect(url_for('open_customer'))
+
+        
+    print(no_of_seats, current_user.id)
    
     return render_template('movie_view.html', UserRole=UserRole, user=current_user, past_projection=past_projections, future_projections = future_projections, movie = current_movie)
 
