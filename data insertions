@@ -12,7 +12,7 @@ insert into screen (number, capacity) values (300, 40);
 insert into screen (number, capacity) values (400, 40);
 insert into screen (number, capacity) values (500, 45);
 
-insert into projection (movie_id,screen_id, date, open_seats) values (1,2,'2021-11-25 20:30:00', 35);
+insert into projection (movie_id,screen_id, date, ) values (1,2,'2021-11-25 20:30:00');
 insert into projection (movie_id,screen_id, date, open_seats) values (1,2,'2021-09-25 16:30:00', 30);
 insert into projection (movie_id,screen_id, date, open_seats) values (2,4,'2021-11-25 17:30:00', 35);
 insert into projection (movie_id,screen_id, date, open_seats) values (5,3,'2021-12-11 21:30:00', 25);
