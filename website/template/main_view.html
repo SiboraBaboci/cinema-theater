@@ -13,31 +13,32 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
+
 <body class="overflow-auto">
+
   <form id="main_search_container"> 
     <input id="main_search_form" type="search" placeholder="Insert movie title...">
     <button id="main_search_button" class="btn btn-primary" >Search</button>
   </form>
 
-  <h1 class="main_heading">Movie screenings today</h1>
+  <h1 class="main_heading">Movie screenings today {{current_date}}</h1>
 
   <div class="main_movie_slideshow">
     <div class="row">
 
       {% for projection in past_projections %}
-      <div class="col-sm">
-        <div class="card" style="width: 13rem;">
-          <img class="card-img-top" src="{{projection.movie_img_str}}"  alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">{{projection.movie_title}} </h5>
-            <button class="btn btn-dark" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
+        <div class="col-sm">
+          <div class="card" style="width: 13rem;">
+            <img class="card-img-top" src="{{projection.movie_img_str}}"  alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{projection.movie_title}}</h5>
+              <p>{{projection.projection_date}}</p>
+              <button class="btn btn-dark" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
+            </div>
           </div>
         </div>
-      </div>
       {% endfor %}
 
-        </div>
-      </div>
     </div>
   </div>
 
@@ -51,6 +52,7 @@
           <img class="card-img-top" src="{{projection.movie_img_str}}"  alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">{{projection.movie_title}} </h5>
+            <p>{{projection.projection_date}}</p>
             <button class="btn btn-dark" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
           </div>
         </div>
@@ -61,7 +63,4 @@
   </div>
 
 </body>
-
-
-
 {% endblock %}
