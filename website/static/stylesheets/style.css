@@ -63,7 +63,7 @@
     font-family: 'Russo One', sans-serif;
 }
 
-#main_movie_slideshow{
+.main_movie_slideshow{
     padding: 0 1.5vw 0 1.5vw;
     width: auto;
 }
