@@ -5,7 +5,7 @@ from website.models import Movie, Projection, Screen, UserRole, Reservation
 from website import db
 from datetime import datetime
 from sqlalchemy import func
-
+from datetime import date
 
 app = create_app()
 
@@ -13,8 +13,8 @@ app = create_app()
 @app.route("/")
 @app.route("/main")
 def open_main():
-    past_projections = Projection.query.filter(func.DATE(Projection.date)<=datetime.today())
-    past_projections_object = [] 
+    past_projections = Projection.query.filter(func.DATE(Projection.date)==datetime.today())
+    past_projections_object = []              
     for projection in past_projections:
         current_movie = Movie.query.get(projection.movie_id)
         projection_dict ={
@@ -28,14 +28,11 @@ def open_main():
 
             "projection_id": projection.id,
             "projection_date": projection.date
-        } 
-        
+        }   
         past_projections_object.append(projection_dict)
+        
     past_projections_list = (list({obj["movie_id"]:obj for obj in past_projections_object}.values()))
-    print(past_projections_list)
-
-
-
+    
     future_projections = Projection.query.filter(func.DATE(Projection.date)>=datetime.today())
     future_projections_object = [] 
     for projection in future_projections:
@@ -55,8 +52,9 @@ def open_main():
         future_projections_object.append(projection_dict)
     future_projections_list = (list({obj["movie_id"]:obj for obj in future_projections_object}.values()))
     
-    #location of the template might have to be specified further in order for the return statement to work (maybe '/additional templates/main_view.html')
-    return render_template('main_view.html', user=current_user,  UserRole=UserRole, past_projections=past_projections_list, future_projections_list=future_projections_list)
+    current_date = date.today().strftime("%d/%m/%Y")
+    # current_date = date.today().strftime("%Y-%m-%d")
+    return render_template('main_view.html', user=current_user,  UserRole=UserRole, past_projections=past_projections_list, future_projections_list=future_projections_list, current_date=current_date)
 
 #if we open the /movie page, the movie view is loaded into the skeleton
 @app.route("/movie/<movie_id>",  methods=['GET', 'POST'])
