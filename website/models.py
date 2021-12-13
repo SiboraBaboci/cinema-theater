@@ -58,7 +58,7 @@ class Projection(db.Model):
     movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable=False)
     screen_id = db.Column(db.Integer, db.ForeignKey("screen.id"), nullable=False)
     date = db.Column(db.DateTime, nullable=False)
-    open_seats = db.Column(db.Integer, nullable=False)# delete this field 
+    
 
     # insert into movie (img_str,title,synopsis,duration,director,main_cast) values ('./static/img/matrix.jpg','matrix','best movie',140,'sibora','sibo'); 
     # delete from movie where movie.title = 'Dune'; 

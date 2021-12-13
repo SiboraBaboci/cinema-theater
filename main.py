@@ -13,9 +13,9 @@ app = create_app()
 @app.route("/")
 @app.route("/main")
 def open_main():
-    past_projections = Projection.query.filter(func.DATE(Projection.date)<=datetime.today())
-    past_projections_object = [] 
-    for projection in past_projections:
+    today_projections = Projection.query.filter(func.DATE(Projection.date)<=datetime.today())
+    today_projections_object = [] 
+    for projection in today_projections:
         current_movie = Movie.query.get(projection.movie_id)
         projection_dict ={
             "movie_id": current_movie.id,
@@ -30,9 +30,9 @@ def open_main():
             "projection_date": projection.date
         } 
         
-        past_projections_object.append(projection_dict)
-    past_projections_list = (list({obj["movie_id"]:obj for obj in past_projections_object}.values()))
-    print(past_projections_list)
+        today_projections_object.append(projection_dict)
+    today_projections_list = (list({obj["movie_id"]:obj for obj in today_projections_object}.values()))
+    print(today_projections_list)
 
 
 
@@ -56,15 +56,16 @@ def open_main():
     future_projections_list = (list({obj["movie_id"]:obj for obj in future_projections_object}.values()))
     
     #location of the template might have to be specified further in order for the return statement to work (maybe '/additional templates/main_view.html')
-    return render_template('main_view.html', user=current_user,  UserRole=UserRole, past_projections=past_projections_list, future_projections_list=future_projections_list)
+    return render_template('main_view.html', user=current_user,  UserRole=UserRole, today_projections=today_projections_list, future_projections_list=future_projections_list)
 
 #if we open the /movie page, the movie view is loaded into the skeleton
 @app.route("/movie/<movie_id>",  methods=['GET', 'POST'])
 def open_movie(movie_id):
-
+    
+    current_movie = Movie.query.get(movie_id)
     projections = Projection.query.filter_by(movie_id = movie_id)
 
-    past_projections = [] 
+    today_projections = [] 
     future_projections = []
     new_reservation_obj = {}  
 
@@ -72,7 +73,7 @@ def open_movie(movie_id):
 
         if projection.date  <= datetime.today():
 
-            current_movie = Movie.query.get(movie_id)
+            
             current_screen = Screen.query.get(projection.screen_id)
             projection_dict ={
                 "screen_id": current_screen.id,
@@ -81,7 +82,7 @@ def open_movie(movie_id):
                 "projection_id": projection.id,
                 "projection_date": projection.date
             } 
-            past_projections.append(projection_dict)
+            today_projections.append(projection_dict)
 
             no_of_seats = ''
             if request.method == 'POST' and projection_dict['projection_date']  <= datetime.today():
@@ -101,7 +102,7 @@ def open_movie(movie_id):
 
 
         elif projection.date  >= datetime.today():
-            current_movie = Movie.query.get(movie_id)
+           
             current_screen = Screen.query.get(projection.screen_id)
             projection_dict ={
                 "screen_id": current_screen.id,
@@ -146,7 +147,7 @@ def open_movie(movie_id):
         
    
    
-    return render_template('movie_view.html', UserRole=UserRole, user=current_user, past_projection=past_projections, future_projections = future_projections, movie = current_movie)
+    return render_template('movie_view.html', UserRole=UserRole, user=current_user, today_projection=today_projections, future_projections = future_projections, movie = current_movie)
 
 @app.route("/reservation",  methods=['GET', 'POST'])
 @login_required
