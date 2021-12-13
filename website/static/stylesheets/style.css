@@ -112,6 +112,15 @@
     margin: 25px;
 }
 
+#customer_table_today{
+    margin: 25px;
+    width: 95%;
+}
+
+#customer_table_future{
+    margin: 25px;
+    width: 95%;
+}
 
 
 
