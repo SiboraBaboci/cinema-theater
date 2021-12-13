@@ -69,6 +69,57 @@
     width: auto;
 }
 
+/********** movie **********/
+#media-container{
+    padding: 25px;
+}
+
+#media-body-container{
+    border: black solid 2px;
+    height: 308px;
+    padding: 25px 30px 25px 30px
+}
+
+#movie_h1{
+    font-family: 'Russo One', sans-serif;
+}
+
+.movie_h1_tables{
+    font-family: 'Russo One', sans-serif;
+    margin-left: 25px;
+}
+
+#movie_h2{
+    font-size: 25px;
+}
+
+#movie_h3{
+    font-size: 20px;
+    color:grey
+}
+
+#movie_table_today{
+    margin: 25px;
+    width: 95%;
+}
+
+#movie_table_future{
+    margin: 25px;
+    width: 95%;
+}
+
+.movie_not_available{
+    margin: 25px;
+}
+
+
+
+
+
+
+
+
+
 
 
 
