@@ -14,14 +14,14 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body class="overflow-auto">
-  <form> 
-    <input type="search" placeholder="Search...">
-    <button class="btn btn-primary" >Search</button>
+  <form id="main_search_container"> 
+    <input id="main_search_form" type="search" placeholder="Insert movie title...">
+    <button id="main_search_button" class="btn btn-primary" >Search</button>
   </form>
 
-  <h1>Today</h1>
+  <h1 class="main_heading">Movie screeings today</h1>
 
-  <div class="container">
+  <div id="main_movie_slideshow">
     <div class="row">
 
       {% for projection in past_projections %}
@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <h1>Next Days</h1>
+  <h1 class="main_heading">Upcoming movie screeings </h1>
 
   <div class="container">
     <div class="row">
