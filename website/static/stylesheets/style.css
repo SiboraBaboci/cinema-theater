@@ -43,13 +43,13 @@
 
 #main_search_form{
     width: 84vw;
-    height: 15vh;
+    height: 25px;
     margin-right: 0.5vw;
 }
 
 #main_search_button{
     width:10vw;
-    height: 15.1vh;
+    height: 25.1px;
     background-color: black;
     color: white;
     font-family: 'Russo One', sans-serif;
