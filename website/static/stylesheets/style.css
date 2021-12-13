@@ -1,15 +1,53 @@
-.test{
+/* base */
+.base_header_container{
+    text-align: center;
+    padding: 3px;
     background-color: black;
-} 
-
-.container{
-    background-color: black;
-    width: 100px
 }
 
-#test{
+.base_seperation_line{
+    color: white;
+    border-width: 2px;
+    margin: 0;
+}
+
+.base_header{
+    font-family: 'Russo One', sans-serif;
+    font-size: 50px;
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+    /* base header links */
+    #home{
+        color: white;
+    }
+
+    #customer{
+        color: white;
+    }
+
+    #logout{
+        color: white;
+    }
+
+/* footer */
+.main_terms{
+    padding: 8px 18px 8px 18px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* footer */
+#base_footer_style{
     background-color: black;
-
-
-
+    color: white;
 }
