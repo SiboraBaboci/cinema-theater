@@ -31,6 +31,14 @@
         color: white;
     }
 
+    #login{
+        color: white;
+    }
+
+    #signUp{
+        color: white;
+    }
+
 /* footer */
 .base_terms{
     padding: 8px 1.5vw 8px 1.5vw;
@@ -108,6 +116,7 @@
     width: 95%;
 }
 
+/**********customer**********/
 .movie_not_available{
     margin: 25px;
 }
@@ -122,10 +131,13 @@
     width: 95%;
 }
 
+/**********login**********/
+.login_logout_form{
+    height: 450px;
+    margin: 25px;
+}
 
-
-
-
+    
 
 
 
