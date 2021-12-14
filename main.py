@@ -5,10 +5,9 @@ from website.models import Movie, Projection, Screen, UserRole, Reservation
 from website import db
 from datetime import datetime
 from sqlalchemy import func
-
+from datetime import date
 
 app = create_app()
-
 #if we start the main page and nothing else, the main_view template is loaded into the skeleton
 @app.route("/")
 @app.route("/main")
@@ -55,8 +54,9 @@ def open_main():
         future_projections_object.append(projection_dict)
     future_projections_list = (list({obj["movie_id"]:obj for obj in future_projections_object}.values()))
     
-    #location of the template might have to be specified further in order for the return statement to work (maybe '/additional templates/main_view.html')
-    return render_template('main_view.html', user=current_user,  UserRole=UserRole, today_projections=today_projections_list, future_projections_list=future_projections_list)
+    current_date = datetime.today().strftime("%d/%m/%Y")
+    
+    return render_template('main_view.html', user=current_user,  UserRole=UserRole, past_projections=past_projections_list, future_projections_list=future_projections_list, current_date=current_date)
 
 #if we open the /movie page, the movie view is loaded into the skeleton
 @app.route("/movie/<movie_id>",  methods=['GET', 'POST'])

@@ -1,0 +1,159 @@
+/********** base **********/
+.base_header_container{
+    text-align: center;
+    padding: 3px;
+    background-color: black;
+}
+
+.base_seperation_line{
+    color: white;
+    border-width: 2px;
+    margin: 0;
+}
+
+.base_header{
+    font-family: 'Russo One', sans-serif;
+    font-size: 50px;
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+    /* base header links */
+    #home{
+        color: white;
+    }
+
+    #customer{
+        color: white;
+    }
+
+    #logout{
+        color: white;
+    }
+
+    #login{
+        color: white;
+    }
+
+    #signUp{
+        color: white;
+    }
+
+/* footer */
+.base_terms{
+    padding: 8px 1.5vw 8px 1.5vw;
+}
+
+/********** main **********/
+#main_search_container{
+    padding: 8px 1.5vw 8px 1.5vw;
+}
+
+#main_search_form{
+    width: 84vw;
+    height: 25px;
+    margin-right: 0.5vw;
+}
+
+#main_search_button{
+    width:10vw;
+    height: 25.1px;
+    background-color: black;
+    color: white;
+    font-family: 'Russo One', sans-serif;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    border: none;
+}
+
+.main_heading{
+    padding: 0 1.5vw 0 1.5vw;
+    font-family: 'Russo One', sans-serif;
+}
+
+.main_movie_slideshow{
+    padding: 0 1.5vw 0 1.5vw;
+    margin-bottom: 25px;
+    width: auto;
+}
+
+/********** movie **********/
+#media-container{
+    padding: 25px;
+}
+
+#media-body-container{
+    border: black solid 2px;
+    height: 308px;
+    padding: 25px 30px 25px 30px
+}
+
+#movie_h1{
+    font-family: 'Russo One', sans-serif;
+}
+
+.movie_h1_tables{
+    font-family: 'Russo One', sans-serif;
+    margin-left: 25px;
+}
+
+#movie_h2{
+    font-size: 25px;
+}
+
+#movie_h3{
+    font-size: 20px;
+    color:grey
+}
+
+#movie_table_today{
+    margin: 25px;
+    width: 95%;
+}
+
+#movie_table_future{
+    margin: 25px;
+    width: 95%;
+}
+
+/**********customer**********/
+.movie_not_available{
+    margin: 25px;
+}
+
+#customer_table_today{
+    margin: 25px;
+    width: 95%;
+}
+
+#customer_table_future{
+    margin: 25px;
+    width: 95%;
+}
+
+/**********login**********/
+.login_logout_form{
+    height: 450px;
+    margin: 25px;
+}
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* footer */
+#base_footer_style{
+    background-color: black;
+    color: white;
+}
