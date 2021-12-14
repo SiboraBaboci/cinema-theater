@@ -13,7 +13,6 @@ app = create_app()
 @app.route("/main")
 def open_main():
     past_projections = Projection.query.filter(func.DATE(Projection.date)==datetime.today().strftime("%Y-%m-%d"))
-    #might be that func.Date(...) is 2021-12-23 20:30:00 and datetime.today() is 23/12/2021 --> not comparable --> hour has to be dropped
     past_projections_object = []              
     for projection in past_projections:
         current_movie = Movie.query.get(projection.movie_id)
@@ -33,7 +32,7 @@ def open_main():
         
     past_projections_list = (list({obj["movie_id"]:obj for obj in past_projections_object}.values()))
     
-    future_projections = Projection.query.filter(func.DATE(Projection.date)>=datetime.today().strftime("%d/%m/%Y"))
+    future_projections = Projection.query.filter(func.DATE(Projection.date)>datetime.today().strftime("%Y-%m-%d"))
     future_projections_object = [] 
     for projection in future_projections:
         current_movie = Movie.query.get(projection.movie_id)
