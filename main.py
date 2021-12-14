@@ -6,6 +6,7 @@ from website import db
 from datetime import datetime
 from sqlalchemy import func
 from datetime import date
+from sqlalchemy.orm import sessionmaker
 
 app = create_app()
 #if we start the main page and nothing else, the main_view template is loaded into the skeleton
@@ -206,6 +207,26 @@ def open_customer():
         future_reservation_list.append(future_reservation_dict)
 
     return render_template('customer_view.html', user=current_user, UserRole=UserRole, past_reservations=past_reservation_list, future_reservations=future_reservation_list)
+
+@app.route("/changeProjection",  methods=['GET', 'POST'])
+@login_required
+#manager role required
+def open_changeProjection():
+    future_projections = Projection.query.filter(func.DATE(Projection.date)<datetime.today().strftime("%Y-%m-%d"))
+    future_projections_object = []            
+    for projection in future_projections:
+        current_movie = Movie.query.get(projection.movie_id)
+        projection_dict ={
+            "projection_id": projection.id,
+            "movie_id": projection.movie_id,
+            "movie_title": current_movie.title,
+            "screen_id": projection.screen_id,
+            "date": projection.date 
+        }   
+        future_projections_object.append(projection_dict)
+        
+    future_projections_list = (list({obj["projection_id"]:obj for obj in future_projections_object}.values()))
+    return render_template('add_movie_view.html', user=current_user, UserRole=UserRole, future_projections=future_projections_list)
 
 if __name__ == '__main__':
     app.run(debug=True)
