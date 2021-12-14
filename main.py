@@ -84,21 +84,21 @@ def open_movie(movie_id):
             } 
             today_projections.append(projection_dict)
 
-            no_of_seats = ''
-            if request.method == 'POST' and projection_dict['projection_date']  <= datetime.today():
-                print(no_of_seats, current_user.id)
+            # no_of_seats = ''
+            # if request.method == 'POST' and projection_dict['projection_date']  <= datetime.today():
+            #     print(no_of_seats, current_user.id)
 
-                no_of_seats = int(request.form.get('no_seats'))
-                print(no_of_seats, current_user.id, 'past')
-                new_reservation_obj = {
-                    "res_label": "past",
-                    "user_id": current_user.id,
-                    "projection_id": projection.id,
-                    "current_capacity": current_screen.capacity,
-                    "no_of_seats": no_of_seats,
-                    "conf_date": datetime.today(),
-                    "screen_id": current_screen.id,
-                } 
+            #     no_of_seats = int(request.form.get('no_seats'))
+            #     print(no_of_seats, current_user.id, 'past')
+            #     new_reservation_obj = {
+            #         "res_label": "past",
+            #         "user_id": current_user.id,
+            #         "projection_id": projection.id,
+            #         "current_capacity": current_screen.capacity,
+            #         "no_of_seats": no_of_seats,
+            #         "conf_date": datetime.today(),
+            #         "screen_id": current_screen.id,
+            #     } 
 
 
         elif projection.date  >= datetime.today():
