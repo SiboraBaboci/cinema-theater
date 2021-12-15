@@ -63,6 +63,18 @@ Add projection
     </div>
   </form>
 
+  <form action="{{ url_for('open_changeProjection') }}" method="post">
+    <select id="projections" name="projection_id_field">
+      {% for projection in future_projections %}
+        <!-- <option value="{{projection.projection_id}} {{projection.movie_id}} {{projection.screen_id}} {{projection.date}} {{projection.slots}}"> -->
+        <option value="{{projection.projection_id}}">  
+          ID: {{projection.projection_id}} | Movie: {{projection.movie_title}} | Screen: {{projection.screen_id}} | Date: {{projection.date}}
+        </option>
+      {% endfor %}
+      </select>
+    <input type="submit" value="Delete projection"/>
+  </form>
+
 
 
   

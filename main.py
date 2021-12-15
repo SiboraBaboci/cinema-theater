@@ -301,14 +301,8 @@ def open_customer():
 
 @app.route("/changeProjection",  methods=['GET', 'POST'])
 @login_required
-#manager role required
 def open_changeProjection():
-    if request.method == 'POST':
-        # movie = request.form.get("movie_field")
-        # current_movie = Movie.query.get(movie)
-        # current_movie = Movie.query.get(projection.movie_id)
-        # current_movie = Movie.query.filter(Movie.title == movie).id
-        # movie_id = current_movie.id
+    if request.method == 'POST' and request.form.get("movie_field"):
         movie_query = Movie.query.filter_by(title=request.form.get("movie_field")).first()
         movie_id = movie_query.id
         screen_id = int(request.form.get("screen_field"))
@@ -321,8 +315,14 @@ def open_changeProjection():
         db.session.add(new_projection)
         db.session.commit()
         return redirect(url_for("open_changeProjection"))
+    elif request.method == 'POST' and not request.form.get("movie_field"):  
+        projection_query = Projection.query.filter_by(id=request.form.get("projection_id_field")).first()
+        db.session.delete(projection_query)
+        db.session.commit()
+        return redirect(url_for("open_changeProjection"))
     else:
-        future_projections = Projection.query.filter(func.DATE(Projection.date)<datetime.today().strftime("%Y-%m-%d"))
+        # future_projections = Projection.query.filter(func.DATE(Projection.date)<datetime.today().strftime("%Y-%m-%d"))
+        future_projections = Projection.query.all()
         future_projections_object = []  
         unique_movie_list = []
         unique_movie_id_list = [] 
@@ -350,27 +350,12 @@ def open_changeProjection():
         future_projections_list = (list({obj["projection_id"]:obj for obj in future_projections_object}.values()))
         return render_template('add_movie_view.html', user=current_user, UserRole=UserRole, future_projections=future_projections_list, unique_movie_list=unique_movie_list, date_list=date_list, unique_movie_id_list=unique_movie_id_list)
 
-    @app.route("/changeProjection",  methods=['POST'])
+    @app.route("/changeProjection",  methods=['GET', 'POST'])
     @login_required
     #manager role required
     def post_changeProjection():
-        # movie = request.form.get("movie_field")
-        # current_movie = Movie.query.get(movie)
-        # current_movie = Movie.query.get(projection.movie_id)
-        # current_movie = Movie.query.filter(Movie.title == movie).id
-        # movie_id = current_movie.id
-        movie_query = Movie.query.filter_by(title=movie_field).first()
-        movie_id = movie_query.id
-        screen_id = request.form.get("screen_field")
-        day = request.form.get("date_field")
-        time = request.form.get("time_field")
-        date = str(day)+" "+str(time)
-        available_slots = Screen.query.filter_by(id=screen_id).distinct
-        new_projection = Projection(movie_id=movie_id, screen_id=screen_id, date=date, available_slots=available_slots)
-        db.session.add(new_projection)
-        db.session.commit()
+        
         return redirect(url_for("open_changeProjection"))
-
 
 if __name__ == '__main__':
     app.run(debug=True)
