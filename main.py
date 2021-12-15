@@ -309,12 +309,14 @@ def open_changeProjection():
         # current_movie = Movie.query.get(projection.movie_id)
         # current_movie = Movie.query.filter(Movie.title == movie).id
         # movie_id = current_movie.id
-        movie_id = request.form.get("movie_field")
-        screen_id = request.form.get("screen_field")
+        movie_query = Movie.query.filter_by(title=request.form.get("movie_field")).first()
+        movie_id = movie_query.id
+        screen_id = int(request.form.get("screen_field"))
         day = request.form.get("date_field")
         time = request.form.get("time_field")
         date = str(day)+" "+str(time)
-        available_slots = Screen.query.filter_by(id=screen_id).distinct
+        slots_query = Screen.query.filter_by(id=request.form.get("screen_field")).first()
+        available_slots = slots_query.capacity
         new_projection = Projection(movie_id=movie_id, screen_id=screen_id, date=date, available_slots = available_slots)
         db.session.add(new_projection)
         db.session.commit()
@@ -332,7 +334,8 @@ def open_changeProjection():
                 "movie_id": projection.movie_id,
                 "movie_title": current_movie.title,
                 "screen_id": projection.screen_id,
-                "date": projection.date
+                "date": projection.date,
+                "slots": projection.available_slots
             }   
             future_projections_object.append(projection_dict)
             #for the if statement it would make more senes to iterate over all movies in the database 
@@ -346,6 +349,28 @@ def open_changeProjection():
 
         future_projections_list = (list({obj["projection_id"]:obj for obj in future_projections_object}.values()))
         return render_template('add_movie_view.html', user=current_user, UserRole=UserRole, future_projections=future_projections_list, unique_movie_list=unique_movie_list, date_list=date_list, unique_movie_id_list=unique_movie_id_list)
+
+    @app.route("/changeProjection",  methods=['POST'])
+    @login_required
+    #manager role required
+    def post_changeProjection():
+        # movie = request.form.get("movie_field")
+        # current_movie = Movie.query.get(movie)
+        # current_movie = Movie.query.get(projection.movie_id)
+        # current_movie = Movie.query.filter(Movie.title == movie).id
+        # movie_id = current_movie.id
+        movie_query = Movie.query.filter_by(title=movie_field).first()
+        movie_id = movie_query.id
+        screen_id = request.form.get("screen_field")
+        day = request.form.get("date_field")
+        time = request.form.get("time_field")
+        date = str(day)+" "+str(time)
+        available_slots = Screen.query.filter_by(id=screen_id).distinct
+        new_projection = Projection(movie_id=movie_id, screen_id=screen_id, date=date, available_slots=available_slots)
+        db.session.add(new_projection)
+        db.session.commit()
+        return redirect(url_for("open_changeProjection"))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
