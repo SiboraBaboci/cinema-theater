@@ -8,3 +8,14 @@ Additional functionalities:
 Libraries:
     pip install Werkzeug
     pip install DateTime
+
+
+
+Users:
+
+username: test1@gmail.com
+pass:     12345678
+
+managerUser:
+username: borababoci1@gmail.com
+pass:     12345678
