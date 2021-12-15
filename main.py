@@ -5,6 +5,7 @@ from website.models import Movie, Projection, Screen, UserRole, Reservation, Use
 from website import db
 from datetime import datetime, timedelta
 from sqlalchemy import func
+from sqlalchemy import *
 from datetime import date
 from sqlalchemy.orm import sessionmaker
 
@@ -14,7 +15,11 @@ app = create_app()
 @app.route("/")
 @app.route("/main")
 def open_main():
-    today_projections = Projection.query.filter(func.DATE(Projection.date)==datetime.today().strftime("%Y-%m-%d"))
+    print(datetime.today())
+    print(datetime.today().replace(hour=23, minute=59))
+
+    today_projections = Projection.query.filter(and_(Projection.date<=datetime.today().replace(hour=23, minute=59) ), Projection.date>=datetime.today())
+    print(today_projections[0] )                       
     today_projections_object = []              
     for projection in today_projections:
         current_movie = Movie.query.get(projection.movie_id)
@@ -32,10 +37,12 @@ def open_main():
             "projection_id": projection.id,
             "projection_date": projection.date
         } 
+        today_projections_object.append(projection_dict)
+
         
     today_projections_list = (list({obj["movie_id"]:obj for obj in today_projections_object}.values()))
     
-    future_projections = Projection.query.filter(func.DATE(Projection.date)>datetime.today().strftime("%Y-%m-%d"))
+    future_projections = Projection.query.filter(func.DATE(Projection.date)>datetime.today())
     future_projections_object = [] 
     for projection in future_projections:
         current_movie = Movie.query.get(projection.movie_id)
@@ -81,7 +88,7 @@ def open_movie(movie_id):
     # now i want to go through every projection in order that i split in todays and future projections 
     for projection in projections:
 
-        if projection.date  <= datetime.today():
+        if projection.date  >= datetime.today() and projection.date <= datetime.today().replace(hour=23, minute=59):
             
            # so here for each projection i query the current_screen that will be played 
             current_screen = Screen.query.get(projection.screen_id)
@@ -120,7 +127,7 @@ def open_movie(movie_id):
                 } 
 
 
-        elif projection.date  >= datetime.today():
+        elif projection.date  > datetime.today():
            
             current_screen = Screen.query.get(projection.screen_id)
             projection_dict ={
