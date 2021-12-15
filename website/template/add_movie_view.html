@@ -26,8 +26,10 @@ Add projection
   <form action="{{ url_for('open_changeProjection') }}" method="post">
     <div>
       <select id="movie_insert" name="movie_field">
+      {% for movie_id in unique_movie_id_list %}
+        <option value="{{movie_id}}">
+      {% endfor %}
       {% for movie in unique_movie_list %}
-        <option value="{{movie}}">
           {{movie}}
         </option>
       {% endfor %}
@@ -61,11 +63,43 @@ Add projection
     <div>
       <input type="submit" value="Add projection"/>
     </div>
-</form>
+  </form>
+
+
+  <form action="/action_page.php">
+    <select id="projections">
+      {% for projection in future_projections %}
+        <option value="{{projection.projection_id}} {{projection.movie_id}} {{projection.screen_id}} {{projection.date}}">
+          ID: {{projection.projection_id}} | Movie: {{projection.movie_title}} | Screen: {{projection.screen_id}} | Date: {{projection.date}}
+        </option>
+      {% endfor %}
+      </select>
+    <input type="submit" value="Delete projection"/>
+  </form>
+  
+
+  
+  <!-- {% for projection in future_projections %}
+  <form>
+    <td>{{projection.projection_id}}</td>
+    <td>{{projection.movie_title}}</td>
+    <td>{{projection.screen_id}}</td>
+    <td>{{projection.date}}</td>
+    <td><button class="btn btn-dark">Delete projection</button></td>
+  </form>
+  {% endfor %} -->
 
 
 
-
+  <!-- {% for projection in future_projections %}
+  <form>
+    <td>{{projection.projection_id}}</td>
+    <td>{{projection.movie_title}}</td>
+    <td>{{projection.screen_id}}</td>
+    <td>{{projection.date}}</td>
+    <td><button class="btn btn-dark">Delete projection</button></td>
+  </form>
+  {% endfor %} -->
 
 
   <!-- <table id="customer_table_today" class="table">
