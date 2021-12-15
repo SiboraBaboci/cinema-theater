@@ -30,14 +30,17 @@ Home
   <div class="main_movie_slideshow">
     <div class="row">
 
-      {% for projection in past_projections %}
+      {% for projection in today_projections %}
         <div class="col-sm">
           <div class="card" style="width: 13rem;">
             <img class="card-img-top" src="{{projection.movie_img_str}}"  alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">{{projection.movie_title}}</h5>
               <p>{{projection.projection_date}}</p>
-              <button class="btn btn-dark" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
+              <button class="btn btn-dark w-100" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
+              {% if user.is_authenticated and user.role == UserRole.manager%}
+                <button class="btn btn-primary w-100 mt-2" onclick="window.location.href = `/movie/{{projection.movie_id}}`">Edit Projection</button>
+              {% endif %} 
             </div>
           </div>
         </div>
@@ -57,7 +60,10 @@ Home
           <div class="card-body">
             <h5 class="card-title">{{projection.movie_title}} </h5>
             <p>{{projection.projection_date}}</p>
-            <button class="btn btn-dark" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
+            <button class="btn btn-dark w-100" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
+            {% if user.is_authenticated and user.role == UserRole.manager %}
+              <button class="btn btn-primary w-100 mt-2" onclick="window.location.href = `/movie/{{projection.movie_id}}`">Edit Projection</button>
+            {% endif %} 
           </div>
         </div>
       </div>

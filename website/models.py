@@ -33,7 +33,6 @@ class Screen(db.Model):
     number = db.Column(db.Integer,nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
 
-
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)
@@ -58,7 +57,8 @@ class Projection(db.Model):
     movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable=False)
     screen_id = db.Column(db.Integer, db.ForeignKey("screen.id"), nullable=False)
     date = db.Column(db.DateTime, nullable=False)
-    #open_seats = db.Column(db.Integer, nullable=False)# delete this field - uncommented this field for now
+    available_slots = db.Column(db.Integer, nullable=False)
+    
 
     # insert into movie (img_str,title,synopsis,duration,director,main_cast) values ('./static/img/matrix.jpg','matrix','best movie',140,'sibora','sibo'); 
     # delete from movie where movie.title = 'Dune'; 
