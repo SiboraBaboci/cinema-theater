@@ -13,6 +13,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </head>
+{% block title %}
+{{movie.title}}
+{% endblock %}
+
 {% block content %}
 <body class="overflow-auto">
 
@@ -134,7 +138,4 @@
       <p class="movie_not_available">There are no future projections available.</p>
     {% endif %}
 </body>
-
-
-
 {% endblock %}

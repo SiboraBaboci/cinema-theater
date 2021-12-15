@@ -3,8 +3,10 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from website.models import Movie, Projection, Screen, UserRole, Reservation, User
 from website import db
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy import func
+from datetime import date
+from sqlalchemy.orm import sessionmaker
 
 app = create_app()
 
@@ -12,14 +14,8 @@ app = create_app()
 @app.route("/")
 @app.route("/main")
 def open_main():
-   # TODO change the date of filter to == in order to get real todays projection 
-
-   # first of all we query the todays projections from database 
-    today_projections = Projection.query.filter(func.DATE(Projection.date)<=datetime.today())  # !! we need also time not only date because when its middle of the day we want movies after that moment not before  
-    today_projections_object = [] 
-
-   # here after we have todays projections we go through all of them with for loop 
-   # now for each projection inside the for loop we get current_movie by quering from database each time.    
+    today_projections = Projection.query.filter(func.DATE(Projection.date)==datetime.today().strftime("%Y-%m-%d"))
+    today_projections_object = []              
     for projection in today_projections:
         current_movie = Movie.query.get(projection.movie_id)
 
@@ -37,15 +33,9 @@ def open_main():
             "projection_date": projection.date
         } 
         
-        today_projections_object.append(projection_dict)
-
-   # this step is to show in main view only the unique projections of todays 
     today_projections_list = (list({obj["movie_id"]:obj for obj in today_projections_object}.values()))
-    print(today_projections_list)
-
-
-
-    future_projections = Projection.query.filter(func.DATE(Projection.date)>=datetime.today())
+    
+    future_projections = Projection.query.filter(func.DATE(Projection.date)>datetime.today().strftime("%Y-%m-%d"))
     future_projections_object = [] 
     for projection in future_projections:
         current_movie = Movie.query.get(projection.movie_id)
@@ -304,6 +294,38 @@ def open_customer():
         future_reservation_list.append(future_reservation_dict)
 
     return render_template('customer_view.html', user=current_user, UserRole=UserRole, past_reservations=past_reservation_list, future_reservations=future_reservation_list)
+
+@app.route("/changeProjection",  methods=['GET', 'POST'])
+@login_required
+#manager role required
+def open_changeProjection():
+    if request.method == 'POST':
+        movie = request.form['movie_field']
+        return render_template('add_movie_view.html', user=current_user, UserRole=UserRole, movie=movie)
+    else:
+        future_projections = Projection.query.filter(func.DATE(Projection.date)<datetime.today().strftime("%Y-%m-%d"))
+        future_projections_object = []  
+        unique_movie_list = []
+        date_list = []        
+        for projection in future_projections:
+            current_movie = Movie.query.get(projection.movie_id)
+            projection_dict ={
+                "projection_id": projection.id,
+                "movie_id": projection.movie_id,
+                "movie_title": current_movie.title,
+                "screen_id": projection.screen_id,
+                "date": projection.date
+            }   
+            future_projections_object.append(projection_dict)
+            #for the if statement it would make more senes to iterate over all movies in the database 
+            if current_movie.title not in unique_movie_list:
+                unique_movie_list.append(current_movie.title)
+    
+        for i in range(30):
+            date_list.append((datetime.today() + timedelta(days=i)).strftime("%d-%m-%Y"))
+
+        future_projections_list = (list({obj["projection_id"]:obj for obj in future_projections_object}.values()))
+        return render_template('add_movie_view.html', user=current_user, UserRole=UserRole, future_projections=future_projections_list, unique_movie_list=unique_movie_list, date_list=date_list)
 
 if __name__ == '__main__':
     app.run(debug=True)
