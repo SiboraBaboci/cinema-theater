@@ -38,9 +38,7 @@ Home
               <h5 class="card-title">{{projection.movie_title}}</h5>
               <p>{{projection.projection_date}}</p>
               <button class="btn btn-dark w-100" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
-              {% if user.is_authenticated and user.role == UserRole.manager%}
-                <button class="btn btn-primary w-100 mt-2" onclick="window.location.href = `/movie/{{projection.movie_id}}`">Edit Projection</button>
-              {% endif %} 
+             
             </div>
           </div>
         </div>
@@ -61,9 +59,7 @@ Home
             <h5 class="card-title">{{projection.movie_title}} </h5>
             <p>{{projection.projection_date}}</p>
             <button class="btn btn-dark w-100" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
-            {% if user.is_authenticated and user.role == UserRole.manager %}
-              <button class="btn btn-primary w-100 mt-2" onclick="window.location.href = `/movie/{{projection.movie_id}}`">Edit Projection</button>
-            {% endif %} 
+            
           </div>
         </div>
       </div>
