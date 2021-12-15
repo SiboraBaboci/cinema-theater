@@ -348,12 +348,6 @@ def open_changeProjection():
         future_projections_list = (list({obj["projection_id"]:obj for obj in future_projections_object}.values()))
         return render_template('add_movie_view.html', user=current_user, UserRole=UserRole, future_projections=future_projections_list, unique_movie_list=unique_movie_list, date_list=date_list, unique_movie_id_list=unique_movie_id_list)
 
-    @app.route("/changeProjection",  methods=['GET', 'POST'])
-    @login_required
-    #manager role required
-    def post_changeProjection():
-        
-        return redirect(url_for("open_changeProjection"))
 
 if __name__ == '__main__':
     app.run(debug=True)
