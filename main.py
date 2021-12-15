@@ -14,7 +14,8 @@ app = create_app()
 @app.route("/")
 @app.route("/main")
 def open_main():
-    today_projections = Projection.query.filter(func.DATE(Projection.date)==datetime.today().strftime("%Y-%m-%d"))
+    # today_projections = Projection.query.filter(func.DATE(Projection.date)==datetime.today().strftime("%Y-%m-%d"))
+    today_projections = Projection.query.filter(func.DATE(Projection.date)=="2021-12-16")
     today_projections_object = []              
     for projection in today_projections:
         current_movie = Movie.query.get(projection.movie_id)
@@ -60,9 +61,6 @@ def open_main():
     
     return render_template('main_view.html', user=current_user,  UserRole=UserRole, today_projections=today_projections_list, future_projections_list=future_projections_list, current_date=current_date)
 
-# if we open the '/movie/<moview_id>' page, the movie view is loaded into the skeleto
-# by writing '/movie/<moview_id>' into the browser we will get the information about the moview that was clicked in main view 
-# and also below movie informations there will be todays projections and next projection where if user is logged in they can make a reservation
 @app.route("/movie/<movie_id>",  methods=['GET', 'POST'])
 def open_movie(movie_id):
     
