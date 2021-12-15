@@ -14,9 +14,10 @@
 </head>
 {% block content %}
 <body class="overflow-auto">
-  <h1 class="movie_h1_tables">Upcoming reservations</h1>
+  <h1 class="movie_h1_tables">Reservations of the Projection ({{current_projection.id}})</h1>
+  <h1 class="movie_h1_tables">Movie Title ({{current_movie.title}})</h1>
 
-  {% if future_reservations %}
+  {% if reservations %}
     <table id="customer_table_today" class="table">
       <thead>
         <tr>
@@ -30,7 +31,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for reservation in future_reservations  %}
+        {% for reservation in reservations  %}
         <tr>
           <td> {{reservation.ID}}</td>
           <td>{{reservation.movie_title }}</td>
@@ -47,44 +48,8 @@
     </table>
   {% endif %}
 
-  {% if not future_reservations %}
-      <p class="movie_not_available">There are no reservations available for today.</p>
-  {% endif %}
-
-  <h1 class="movie_h1_tables">Past reservations</h1>
-
-  {% if past_reservations %}
-  <table id="customer_table_future" class="table">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Movie Title</th>
-        <th scope="col">Screen Number</th>
-        <th scope="col">Projection Date</th>
-        <th scope="col">Reservation Owner</th>
-        <th scope="col">Number of Seats</th>
-        <th scope="col">Confirmation Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for reservation in past_reservations %}
-      <tr>
-        <td> {{reservation.ID}}</td>
-        <td>{{reservation.movie_title }}</td>
-        <td>{{reservation.screen_number}}</td>
-        <td>{{reservation.projection_date}}</td>
-        <td>{{reservation.reservation_owner}}</td>
-        <td>{{reservation.no_of_seats}}</td>
-        <td>{{reservation.confirmation_date}}</td>
-        <td> <button class="btn btn-dark w-100" onclick="window.location.href = `/reservation/{{reservation.ID}}`">See Reservation details</button></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% endif %}
-
-  {% if not past_reservations %}
-    <p class="movie_not_available">There are no reservations registered in the past.</p>
+  {% if not reservations %}
+      <p class="movie_not_available">There are no reservations available.</p>
   {% endif %}
 
 </body>

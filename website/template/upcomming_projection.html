@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
-
 <head>
-  <title>reservation</title>
+  <title>customer</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -15,15 +14,10 @@
 </head>
 {% block content %}
 <body class="overflow-auto">
-<h1 class="ml-3 mt-2">Title:  {{reservation.movie_title}}</h1>
-<h1 class="ml-3 mb-5">Screen: {{reservation.screen_number}}</h1>
+  <h1 class="movie_h1_tables">Upcoming reservations</h1>
 
-<div id="media-container" class="media mb-5">
-  <img class="align-self-start mr-3 img-fluid" style="width: 13rem;" src="{{reservation.movie_img_str}}">
-  
-  <div id="media-body-container" class="media-body overflow-auto">    
-    <h2>Reservation summary</h2>     
-    <table id="customer_table_future" class="table">
+  {% if future_projections %}
+    <table id="customer_table_today" class="table">
       <thead>
         <tr>
           <th scope="col">ID</th>
@@ -32,29 +26,31 @@
           <th scope="col">Projection Date</th>
           <th scope="col">Reservation Owner</th>
           <th scope="col">Number of Seats</th>
-          <th scope="col">Confirmation Date</th>
         </tr>
       </thead>
       <tbody>
-       
+        {% for projection in future_projections  %}
         <tr>
-          <td> {{reservation.ID}}</td>
-          <td>{{reservation.movie_title }}</td>
-          <td>{{reservation.screen_number}}</td>
-          <td>{{reservation.projection_date}}</td>
-          <td>{{reservation.reservation_owner}}</td>
-          <td>{{reservation.no_of_seats}}</td>
-          <td>{{reservation.confirmation_date}}</td>
-          
+          <td> {{projection.ID}}</td>
+          <td>{{projection.movie_title }}</td>
+          <td>{{projection.screen_number}}</td>
+          <td>{{projection.projection_date}}</td>
+          <td>{{projection.reservation_owner}}</td>
+          <td>{{projection.no_of_seats}}</td>
+          <td>{{projection.confirmation_date}}</td>
         </tr>
-       
+        {% endfor %}
       </tbody>
     </table>
-  </div>
-</div>
+  {% endif %}
+
+  {% if not future_projections %}
+      <p class="movie_not_available">There are no projection available.</p>
+  {% endif %}
+
+
 
 </body>
-
 
 
 {% endblock %}

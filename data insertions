@@ -6,11 +6,11 @@ insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("
 insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("../static/img/noTimeToDie.jpg","No Time To Die","James Bond is enjoying a tranquil life in Jamaica after leaving active service. However, his peace is short-lived as his old CIA friend, Felix Leiter, shows up and asks for help. The mission to rescue a kidnapped scientist turns out to be far more treacherous than expected, leading Bond on the trail of a mysterious villain who's armed with a dangerous new technology.",163,"Cary Joji Fukunaga","Daniel Craig, Rami Malek, Ana de Armas");
 insert into movie (img_str,title,synopsis,duration,director,main_cast) values ("../static/img/redNotice.jpeg","Red Notice","In the world of international crime, an Interpol agent attempts to hunt down and capture the world's most wanted art thief.",115,"Rawson Marshall Thurber","Gal Gadot, Dwayne Johnson, Ryan Reynolds");
 
-insert into screen (number, capacity) values (100, 50);
-insert into screen (number, capacity) values (200, 50);
-insert into screen (number, capacity) values (300, 40);
-insert into screen (number, capacity) values (400, 40);
-insert into screen (number, capacity) values (500, 45);
+insert into screen (number, capacity, available_slots) values (100, 50, 50);
+insert into screen (number, capacity, available_slots) values (200, 50, 50);
+insert into screen (number, capacity, available_slots) values (300, 40, 40);
+insert into screen (number, capacity, available_slots) values (400, 40, 40);
+insert into screen (number, capacity, available_slots) values (500, 45, 45);
 
 insert into projection (movie_id,screen_id, date) values (1,2,'2021-11-25 20:30:00');
 insert into projection (movie_id,screen_id, date) values (1,2,'2021-09-25 16:30:00');

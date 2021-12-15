@@ -32,7 +32,7 @@ class Screen(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     number = db.Column(db.Integer,nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
-
+    available_slots = db.Column(db.Integer, nullable=False)
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
