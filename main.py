@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from website.models import Movie, Projection, Screen, UserRole, Reservation
 from website import db
-from datetime import datetime
+from datetime import datetime, timedelta
 from sqlalchemy import func
 from datetime import date
 from sqlalchemy.orm import sessionmaker
@@ -213,7 +213,9 @@ def open_customer():
 #manager role required
 def open_changeProjection():
     future_projections = Projection.query.filter(func.DATE(Projection.date)<datetime.today().strftime("%Y-%m-%d"))
-    future_projections_object = []            
+    future_projections_object = []  
+    unique_movie_list = []
+    date_list = []        
     for projection in future_projections:
         current_movie = Movie.query.get(projection.movie_id)
         projection_dict ={
@@ -221,12 +223,18 @@ def open_changeProjection():
             "movie_id": projection.movie_id,
             "movie_title": current_movie.title,
             "screen_id": projection.screen_id,
-            "date": projection.date 
+            "date": projection.date
         }   
         future_projections_object.append(projection_dict)
-        
+        #for the if statement it would make more senes to iterate over all movies in the database 
+        if current_movie.title not in unique_movie_list:
+            unique_movie_list.append(current_movie.title)
+    
+    for i in range(30):
+        date_list.append((datetime.today() + timedelta(days=i)).strftime("%d-%m-%Y"))
+
     future_projections_list = (list({obj["projection_id"]:obj for obj in future_projections_object}.values()))
-    return render_template('add_movie_view.html', user=current_user, UserRole=UserRole, future_projections=future_projections_list)
+    return render_template('add_movie_view.html', user=current_user, UserRole=UserRole, future_projections=future_projections_list, unique_movie_list=unique_movie_list, date_list=date_list)
 
 if __name__ == '__main__':
     app.run(debug=True)
