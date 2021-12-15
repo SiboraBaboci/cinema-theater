@@ -1,61 +1,152 @@
 {% extends "base.html" %}
 
-
 <head>
   <title>movie</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static',filename='stylesheets/style.css') }}">
+  
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </head>
+{% block title %}
+{{movie.title}}
+{% endblock %}
+
 {% block content %}
 <body class="overflow-auto">
-    <div class="media">
-        <div class="media-body">         
-          <h1 class="mt-0">{{movie.title}}  </h1>
-          <h2> {{movie.director}} :{{movie.main_cast}}</h2>
-          <h3> {{movie.duration}}</h3>
-          <p>{{movie.synopsis}}</p>
-        </div>
-        <img class="align-self-start mr-3 img-fluid" style="width: 13rem;" src="{{movie.img_str}}" alt="Generic placeholder image">
+
+    <div id="media-container" class="media">
+      <img class="align-self-start mr-3 img-fluid" style="width: 13rem;" src="{{movie.img_str}}" alt="{{movie.title}}">
+      
+      <div id="media-body-container" class="media-body overflow-auto">         
+        <h1 id="movie_h1" class="mt-0">{{movie.title}}  </h1>
+        <h2 id="movie_h2"> {{movie.main_cast}}</h2>
+        <h3 id="movie_h3"> {{movie.director}} (director), {{movie.duration}} min.</h3>
+        <p>{{movie.synopsis}}</p>
       </div>
+    </div>
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
+    <h1 class="movie_h1_tables">Todays Projections</h1>
 
+    {% if today_projection %}
+    <table id="movie_table_today" class="table">
+      <thead>
+        <tr>
+          <th scope="col">Available Slots</th>
+          {% if user.is_authenticated and user.role == UserRole.manager %}
+           <th scope="col">Slots Reserved</th>
+          {% endif %}
+          <th scope="col">Projection date</th>
+          <th scope="col"></th>  
+          <th scope="col"></th> 
+        </tr>
+      </thead>
+      <tbody>
+        {% for projection in today_projection %}
+        <tr>
+          <td>{{projection.projection_available_slots}}</td>
+          {% if user.is_authenticated and user.role == UserRole.manager %}
+            <td>{{projection.screen_capacity - projection.projection_available_slots}}</td>
+          {% endif %}
+          <td>{{projection.projection_date}}</td>
+          
+          {% if user.is_authenticated %}
+          <td>
+            <form method="POST">
+              <div class="input-group mb-3 w-75" method='POST'>
+                <input type="number" min="1" max="{{projection.projection_available_slots}}" class="form-control" placeholder="Number of seats" id="no_seats" name="no_seats">
+                <div class="input-group-append">
+                  <button class="btn btn-dark"  type="submit">Make reservation</button>
+                </div>
+              </div>
+            </form>
+          </td>
+          {% endif %} 
+
+          {% if user.is_authenticated and user.role == UserRole.manager %}
+          <td>
+            <td> <button class="btn btn-dark w-100" onclick="window.location.href = `/projection/{{projection.projection_id}}`">See Reservations</button></td>
+          </td>
+          {% endif %} 
+          
+          {% if not user.is_authenticated %}
+          <td>
+            Please login to make reservations
+          </td>
+          {% endif %} 
+          
+        </tr>
+        {% endfor %}
+      
+      </tbody>
+    </table>
+    {% endif %}
+
+    {% if not today_projection %}
+      <p class="movie_not_available">There are no projections available for today.</p>
+    {% endif %}
+
+    <h1 class="movie_h1_tables">Next Projections</h1>
+
+    {% if future_projections %}
+    <table id="movie_table_future" class="table">
+      <thead>
+        <tr>
+          <th scope="col">Available Slots</th>
+          {% if user.is_authenticated and user.role == UserRole.manager %}
+           <th scope="col">Slots Reserved</th>
+          {% endif %}
+          <th scope="col">Projection date</th>
+          <th scope="col"></th>  
+          <th scope="col"></th> 
+        </tr>
+      </thead>
+      <tbody>
+        {% for projection in future_projections %}
+        <tr>
+          
+          <td>{{projection.projection_available_slots}}</td>
+          {% if user.is_authenticated and user.role == UserRole.manager %}
+            <td>{{projection.screen_capacity - projection.projection_available_slots}}</td>
+          {% endif %}
+          <td>{{projection.projection_date}}</td>
+            {% if user.is_authenticated %}
+          <td>
+            <form method="POST">
+              <div class="input-group mb-3 w-75" method='POST'>
+                <input type="number" min="1" max="{{projection.projection_available_slots}}" class="form-control" placeholder="Number of seats" id="no_seats" name="no_seats">
+                <div class="input-group-append">
+                  <button class="btn btn-dark" type="submit">Make reservation</button>
+                </div>
+              </div>
+            </form>
+          </td>
+          {% endif %} 
+          {% if user.is_authenticated and user.role == UserRole.manager %}
+          <td>
+            <td> <button class="btn btn-dark w-100" onclick="window.location.href = `/projection/{{projection.projection_id}}`">See Reservations</button></td>
+          </td>
+          {% endif %} 
+            {% if not user.is_authenticated %}
+            <td>
+            Please login to make reservations
+          </td>
+           {% endif %} 
+          
+        </tr>
+        {% endfor %}
+      
+      </tbody>
+    </table>
+    {% endif %}
+
+    {% if not future_projections %}
+      <p class="movie_not_available">There are no future projections available.</p>
+    {% endif %}
 </body>
-
-
-
 {% endblock %}

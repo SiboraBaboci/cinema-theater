@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+
+<head>
+  <title>customer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static',filename='stylesheets/style.css') }}">
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="{{ url_for('static',filename='index.js') }}"></script> 
+</head>
+
+{% block title %}
+Add projection
+{% endblock %}
+
+<!-- add function that prints error message once you have two overlapping dates and screens -->
+
+{% block content %}
+<body class="add_body overflow-auto">
+  <h1 class="movie_h1_tables">Add projections</h1>
+  <form class="add_class" action="{{ url_for('open_changeProjection')}}" method="post">
+    <div>
+      <select  class="insert btn-dark" id="movie_insert" name="movie_field">
+      {% for movie in unique_movie_list %}
+        <option value="{{movie}}">
+          {{movie}}
+        </option>
+      {% endfor %}
+      </select>
+    </div>
+    <div>
+      <select  class="insert btn-dark" id="screen_insert" name="screen_field">
+        <option value="1">100</option>
+        <option value="2">200</option>
+        <option value="3">300</option>
+        <option value="4">400</option>
+        <option value="5">500</option>
+      </select>
+    </div>
+    <div>
+      <select class="insert btn-dark" id="date_insert" name="date_field">
+        {% for date in date_list %}
+          <option value="{{date}}">
+            {{date}}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <select  class="insert btn-dark" id="time_insert" name="time_field">
+        <option value="14:30:00">14:30</option>
+        <option value="17:30:00">17:30</option>
+        <option value="20:30:00">20:30</option>
+      </select>
+    </div>
+    <div>
+      <input  class="insert btn-dark" type="submit" value="Add projection"/>
+    </div>
+  </form>
+
+  <h1 class="movie_h1_tables">Delete projections</h1>
+  <form action="{{ url_for('open_changeProjection') }}" method="post">
+    <select class="insert_grand btn-dark" id="projections" name="projection_id_field">
+      {% for projection in future_projections %}
+        <!-- <option value="{{projection.projection_id}} {{projection.movie_id}} {{projection.screen_id}} {{projection.date}} {{projection.slots}}"> -->
+        <option value="{{projection.projection_id}}">  
+          ID: {{projection.projection_id}} | Movie: {{projection.movie_title}} | Screen: {{projection.screen_id}} | Date: {{projection.date}}
+        </option>
+      {% endfor %}
+      </select>
+    <input class="insert btn-dark" type="submit" value="Delete projection"/>
+  </form>
+
+
+
+  
+
+  
+  <!-- {% for projection in future_projections %}
+  <form>
+    <td>{{projection.projection_id}}</td>
+    <td>{{projection.movie_title}}</td>
+    <td>{{projection.screen_id}}</td>
+    <td>{{projection.date}}</td>
+    <td><button class="btn btn-dark">Delete projection</button></td>
+  </form>
+  {% endfor %} -->
+
+
+
+  <!-- {% for projection in future_projections %}
+  <form>
+    <td>{{projection.projection_id}}</td>
+    <td>{{projection.movie_title}}</td>
+    <td>{{projection.screen_id}}</td>
+    <td>{{projection.date}}</td>
+    <td><button class="btn btn-dark">Delete projection</button></td>
+  </form>
+  {% endfor %} -->
+
+
+  <!-- <table id="customer_table_today" class="table">
+    <thead>
+      <tr>
+        <th scope="col">Movie Title</th>
+        <th scope="col">Screen Number</th>
+        <th scope="col">Projection Date</th>
+        <th scope="col">Projection Time</th>
+        <th scope="col">Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td> 
+            <select id="movie_insert" name="movie_field">
+            {% for movie in unique_movie_list %}
+              <option value="{{movie}}">
+                {{movie}}
+              </option>
+            {% endfor %}
+            </select>
+          </td>
+          <td>
+            <select id="screen_insert">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+          </td>
+          <td>
+            <select id="date_insert">
+              {% for date in date_list %}
+                <option value="{{date}}">
+                  {{date}}
+                </option>
+              {% endfor %}
+            </select>
+          </td>
+          <td>
+            <select id="time_insert">
+              <option value="14:30">14:30</option>
+              <option value="17:30">17:30</option>
+              <option value="20:30">20:30</option>
+            </select>
+          </td>
+          <td><button id="add_projections" class="btn btn-dark">Add projection</button></td>
+        </tr>
+    </tbody>
+    
+    <thead>
+      <tr>
+        <th scope="col">Projection ID</th>
+        <th scope="col">Movie Title</th>
+        <th scope="col">Screen Number</th>
+        <th scope="col">Projection Date</th>
+        <th scope="col">Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for projection in future_projections %}
+        <tr>
+          <td> {{projection.projection_id}}</td>
+          <td>{{projection.movie_title}}</td>
+          <td>{{projection.screen_id}}</td>
+          <td>{{projection.date}}</td>
+          <td><button class="btn btn-dark">Delete projection</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table> -->
+
+</body>
+{% endblock %}
