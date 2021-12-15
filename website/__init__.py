@@ -9,7 +9,7 @@ DB_NAME = "database.db"
 
 def create_app():
     app = Flask(__name__, template_folder='./template')
-    app.config['SECRET_KEY'] = 'palma'
+    app.config['SECRET_KEY'] = 'verysecretkey'
 
 
     app.config[
