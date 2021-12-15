@@ -23,7 +23,52 @@ Add projection
 {% block content %}
 <body class="overflow-auto">
   <h1 class="movie_h1_tables">Add or delete projections</h1>
-  <table id="customer_table_today" class="table">
+  <form action="{{ url_for('open_changeProjection') }}" method="post">
+    <div>
+      <select id="movie_insert" name="movie_field">
+      {% for movie in unique_movie_list %}
+        <option value="{{movie}}">
+          {{movie}}
+        </option>
+      {% endfor %}
+      </select>
+    </div>
+    <div>
+      <select id="screen_insert" name="screen_field">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </div>
+    <div>
+      <select id="date_insert" name="date_field">
+        {% for date in date_list %}
+          <option value="{{date}}">
+            {{date}}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <select id="time_insert" name="time_field">
+        <option value="14:30:00">14:30</option>
+        <option value="17:30:00">17:30</option>
+        <option value="20:30:00">20:30</option>
+      </select>
+    </div>
+    <div>
+      <input type="submit" value="Add projection"/>
+    </div>
+</form>
+
+
+
+
+
+
+  <!-- <table id="customer_table_today" class="table">
     <thead>
       <tr>
         <th scope="col">Movie Title</th>
@@ -60,12 +105,14 @@ Add projection
                   {{date}}
                 </option>
               {% endfor %}
+            </select>
           </td>
           <td>
             <select id="time_insert">
               <option value="14:30">14:30</option>
               <option value="17:30">17:30</option>
               <option value="20:30">20:30</option>
+            </select>
           </td>
           <td><button id="add_projections" class="btn btn-dark">Add projection</button></td>
         </tr>
@@ -91,7 +138,7 @@ Add projection
         </tr>
         {% endfor %}
     </tbody>
-  </table>
+  </table> -->
 
 </body>
 
