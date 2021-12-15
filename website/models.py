@@ -32,7 +32,6 @@ class Screen(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     number = db.Column(db.Integer,nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
-    available_slots = db.Column(db.Integer, nullable=False)
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -58,6 +57,7 @@ class Projection(db.Model):
     movie_id = db.Column(db.Integer, db.ForeignKey("movie.id"), nullable=False)
     screen_id = db.Column(db.Integer, db.ForeignKey("screen.id"), nullable=False)
     date = db.Column(db.DateTime, nullable=False)
+    available_slots = db.Column(db.Integer, nullable=False)
     
 
     # insert into movie (img_str,title,synopsis,duration,director,main_cast) values ('./static/img/matrix.jpg','matrix','best movie',140,'sibora','sibo'); 

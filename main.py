@@ -91,6 +91,7 @@ def open_movie(movie_id):
                 "screen_id": current_screen.id,
                 "screen_number": current_screen.number,
                 "screen_capacity": current_screen.capacity,
+                "projection_available_slots": projection.available_slots,
                 "projection_id": projection.id,
                 "projection_date": projection.date
             } 
@@ -112,6 +113,7 @@ def open_movie(movie_id):
                     "user_id": current_user.id,
                     "projection_id": projection.id,
                     "current_capacity": current_screen.capacity,
+                    "projection_available_slots": projection.available_slots,
                     "no_of_seats": no_of_seats,
                     "conf_date": datetime.today(),
                     "screen_id": current_screen.id,
@@ -125,6 +127,7 @@ def open_movie(movie_id):
                 "screen_id": current_screen.id,
                 "screen_number": current_screen.number,
                 "screen_capacity": current_screen.capacity,
+                "projection_available_slots": projection.available_slots,
                 "projection_id": projection.id,
                 "projection_date": projection.date
             } 
@@ -141,6 +144,7 @@ def open_movie(movie_id):
                     "user_id": current_user.id,
                     "projection_id": projection.id,
                     "current_capacity": current_screen.capacity,
+                    "projection_available_slots": projection.available_slots,
                     "no_of_seats": no_of_seats,
                     "conf_date": datetime.today(),
                     "screen_id": current_screen.id,
@@ -156,8 +160,8 @@ def open_movie(movie_id):
             print(new_reservation_obj['screen_id'])
 
             # update screen available slots 
-            screen_to_be_updated = Screen.query.get(new_reservation_obj['screen_id'])
-            screen_to_be_updated.capacity = new_reservation_obj['current_capacity'] - new_reservation_obj['no_of_seats'] 
+            projection_to_be_updated = Projection.query.get(new_reservation_obj['projection_id'])
+            projection_to_be_updated.available_slots = new_reservation_obj['projection_available_slots'] - new_reservation_obj['no_of_seats'] 
             db.session.commit()            
 
             flash('Reservation saved.', category = 'success')
@@ -171,8 +175,8 @@ def open_movie(movie_id):
             print(new_reservation_obj_today['screen_id'])
 
             # update screen available slots 
-            screen_to_be_updated = Screen.query.get(new_reservation_obj_today['screen_id'])
-            screen_to_be_updated.capacity = new_reservation_obj_today['current_capacity'] - new_reservation_obj_today['no_of_seats'] 
+            projection_to_be_updated = Projection.query.get(new_reservation_obj_today['projection_id'])
+            projection_to_be_updated.available_slots = new_reservation_obj_today['projection_available_slots'] - new_reservation_obj_today['no_of_seats'] 
             db.session.commit()            
 
             flash('Reservation saved.', category = 'success')

@@ -37,7 +37,10 @@
     <table id="movie_table_today" class="table">
       <thead>
         <tr>
-          <th scope="col">Screen capacity</th>
+          <th scope="col">Available Slots</th>
+          {% if user.is_authenticated and user.role == UserRole.manager %}
+           <th scope="col">Slots Reserved</th>
+          {% endif %}
           <th scope="col">Projection date</th>
           <th scope="col"></th>  
           <th scope="col"></th> 
@@ -46,14 +49,17 @@
       <tbody>
         {% for projection in today_projection %}
         <tr>
-          <td>{{projection.screen_capacity}}</td>
+          <td>{{projection.projection_available_slots}}</td>
+          {% if user.is_authenticated and user.role == UserRole.manager %}
+            <td>{{projection.screen_capacity - projection.projection_available_slots}}</td>
+          {% endif %}
           <td>{{projection.projection_date}}</td>
           
           {% if user.is_authenticated %}
           <td>
             <form method="POST">
               <div class="input-group mb-3 w-75" method='POST'>
-                <input type="number" min="1" max="{{projection.screen_capacity}}" class="form-control" placeholder="Number of seats" id="no_seats" name="no_seats">
+                <input type="number" min="1" max="{{projection.projection_available_slots}}" class="form-control" placeholder="Number of seats" id="no_seats" name="no_seats">
                 <div class="input-group-append">
                   <button class="btn btn-dark"  type="submit">Make reservation</button>
                 </div>
@@ -91,8 +97,10 @@
     <table id="movie_table_future" class="table">
       <thead>
         <tr>
-          <th scope="col">Screen capacity</th>
-
+          <th scope="col">Available Slots</th>
+          {% if user.is_authenticated and user.role == UserRole.manager %}
+           <th scope="col">Slots Reserved</th>
+          {% endif %}
           <th scope="col">Projection date</th>
           <th scope="col"></th>  
           <th scope="col"></th> 
@@ -102,13 +110,16 @@
         {% for projection in future_projections %}
         <tr>
           
-          <td>{{projection.screen_capacity}}</td>
+          <td>{{projection.projection_available_slots}}</td>
+          {% if user.is_authenticated and user.role == UserRole.manager %}
+            <td>{{projection.screen_capacity - projection.projection_available_slots}}</td>
+          {% endif %}
           <td>{{projection.projection_date}}</td>
             {% if user.is_authenticated %}
           <td>
             <form method="POST">
               <div class="input-group mb-3 w-75" method='POST'>
-                <input type="number" min="1" max="{{projection.screen_capacity}}" class="form-control" placeholder="Number of seats" id="no_seats" name="no_seats">
+                <input type="number" min="1" max="{{projection.projection_available_slots}}" class="form-control" placeholder="Number of seats" id="no_seats" name="no_seats">
                 <div class="input-group-append">
                   <button class="btn btn-dark" type="submit">Make reservation</button>
                 </div>
