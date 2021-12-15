@@ -138,8 +138,26 @@
 }
 
     
+/**********changeProjection**********/
+.add_class{
+    padding: 0 1.5vw 0 1.5vw;
+    display: grid;
+    grid-template-columns: 15vw 15vw 15vw 15vw 15vw;
+    grid-column-gap: 1vw
+} 
 
+.insert{
+    width: 15vw;
+    height: 30px;
+} 
 
+.insert_grand{
+    width: 63vw;
+    margin-left: 1.5vw;
+    margin-right: 0.6vw;
+    margin-bottom: 50vh;
+    height: 30px;
+} 
 
 
 
