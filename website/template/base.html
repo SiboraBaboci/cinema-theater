@@ -42,6 +42,7 @@
           <a class="nav-item nav-link" id="customer" href="/customer">My reservations</a>
           {% if user.role == UserRole.manager %}
           <a class="nav-item nav-link" id="register-manager" href="/register-manager">Register new manager</a>
+          <a class="nav-item nav-link" id="change-projection" href="/changeProjection">Edit projections</a>
           {% endif %} 
           <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
          {% else %}

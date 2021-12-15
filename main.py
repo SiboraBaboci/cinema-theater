@@ -67,9 +67,6 @@ def open_main():
     
     return render_template('main_view.html', user=current_user,  UserRole=UserRole, today_projections=today_projections_list, future_projections_list=future_projections_list, current_date=current_date)
 
-# if we open the '/movie/<moview_id>' page, the movie view is loaded into the skeleto
-# by writing '/movie/<moview_id>' into the browser we will get the information about the moview that was clicked in main view 
-# and also below movie informations there will be todays projections and next projection where if user is logged in they can make a reservation
 @app.route("/movie/<movie_id>",  methods=['GET', 'POST'])
 def open_movie(movie_id):
     
@@ -357,12 +354,6 @@ def open_changeProjection():
         future_projections_list = (list({obj["projection_id"]:obj for obj in future_projections_object}.values()))
         return render_template('add_movie_view.html', user=current_user, UserRole=UserRole, future_projections=future_projections_list, unique_movie_list=unique_movie_list, date_list=date_list, unique_movie_id_list=unique_movie_id_list)
 
-    @app.route("/changeProjection",  methods=['GET', 'POST'])
-    @login_required
-    #manager role required
-    def post_changeProjection():
-        
-        return redirect(url_for("open_changeProjection"))
 
 if __name__ == '__main__':
     app.run(debug=True)
