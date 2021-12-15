@@ -23,7 +23,7 @@ Add projection
 {% block content %}
 <body class="overflow-auto">
   <h1 class="movie_h1_tables">Add or delete projections</h1>
-  <form action="{{ url_for('open_changeProjection') }}" method="post">
+  <form action="{{ url_for('post_changeProjection') }}" method="post">
     <div>
       <select id="movie_insert" name="movie_field">
       {% for movie_id in unique_movie_id_list %}
@@ -66,10 +66,10 @@ Add projection
   </form>
 
 
-  <form action="/action_page.php">
+  <form action="{{ url_for('post_changeProjection') }}" method="post">
     <select id="projections">
       {% for projection in future_projections %}
-        <option value="{{projection.projection_id}} {{projection.movie_id}} {{projection.screen_id}} {{projection.date}}">
+        <option value="{{projection.projection_id}} {{projection.movie_id}} {{projection.screen_id}} {{projection.date}} {{projection.slots}}">
           ID: {{projection.projection_id}} | Movie: {{projection.movie_title}} | Screen: {{projection.screen_id}} | Date: {{projection.date}}
         </option>
       {% endfor %}
@@ -175,6 +175,4 @@ Add projection
   </table> -->
 
 </body>
-
-
 {% endblock %}
