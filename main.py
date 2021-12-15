@@ -213,8 +213,23 @@ def open_customer():
 #manager role required
 def open_changeProjection():
     if request.method == 'POST':
-        movie = request.form['movie_field']
-        return render_template('add_movie_view.html', user=current_user, UserRole=UserRole, movie=movie)
+        movie = request.form.get("movie_field")
+        # current_movie = Movie.query.get(movie)
+        #current_movie = Movie.query.get(projection.movie_id)
+        # current_movie = Movie.query.filter(Movie.title == movie).id
+        # movie_id = current_movie.id
+        movie_id = 1
+        screen_id = request.form.get("screen_field")
+        # day = datetime.strptime(request.form.get("date_field"), "%Y-%m-%d")
+        # day = datetime.date(request.form.get("date_field")).strftime("%d-%m-%Y")
+        day = request.form.get("date_field")
+        time = request.form.get("time_field")
+        date = str(day)+" "+str(time)
+
+        new_projection = Projection(movie_id=movie_id, screen_id=screen_id, date=date)
+        db.session.add(new_projection)
+        db.session.commit()
+        return redirect(url_for("open_changeProjection"))
     else:
         future_projections = Projection.query.filter(func.DATE(Projection.date)<datetime.today().strftime("%Y-%m-%d"))
         future_projections_object = []  
@@ -235,7 +250,7 @@ def open_changeProjection():
                 unique_movie_list.append(current_movie.title)
     
         for i in range(30):
-            date_list.append((datetime.today() + timedelta(days=i)).strftime("%d-%m-%Y"))
+            date_list.append((datetime.today() + timedelta(days=i)).strftime("%Y-%m-%d"))
 
         future_projections_list = (list({obj["projection_id"]:obj for obj in future_projections_object}.values()))
         return render_template('add_movie_view.html', user=current_user, UserRole=UserRole, future_projections=future_projections_list, unique_movie_list=unique_movie_list, date_list=date_list)
