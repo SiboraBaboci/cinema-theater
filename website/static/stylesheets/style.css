@@ -39,6 +39,13 @@
         color: white;
     }
 
+    #register-manager{
+        color: white;
+    }
+
+    #change-projection{
+        color: white;
+    }
 /* footer */
 .base_terms{
     padding: 8px 1.5vw 8px 1.5vw;
