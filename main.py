@@ -15,11 +15,7 @@ app = create_app()
 @app.route("/")
 @app.route("/main")
 def open_main():
-    print(datetime.today())
-    print(datetime.today().replace(hour=23, minute=59))
-
-    today_projections = Projection.query.filter(and_(Projection.date<=datetime.today().replace(hour=23, minute=59) ), Projection.date>=datetime.today())
-    print(today_projections[0] )                       
+    today_projections = Projection.query.filter(and_(Projection.date<=datetime.today().replace(hour=23, minute=59) ), Projection.date>=datetime.today())                       
     today_projections_object = []              
     for projection in today_projections:
         current_movie = Movie.query.get(projection.movie_id)
@@ -108,10 +104,8 @@ def open_movie(movie_id):
            # we store the  information needed for making a reservation, and here it is splitted into two part one today and one futur, and this one is if projection that is about to be reserved is today!
             no_of_seats = ''
             if request.method == 'POST' and projection_dict['projection_date']  <= datetime.today():
-                print(no_of_seats, current_user.id)
 
                 no_of_seats = int(request.form.get('no_seats'))
-                print(no_of_seats, current_user.id, 'today')
                 new_reservation_obj_today = {
                     "res_label": "today",
                     "user_id": current_user.id,
@@ -141,7 +135,6 @@ def open_movie(movie_id):
             if request.method == 'POST' and projection_dict['projection_date']  >= datetime.today():
 
                 no_of_seats = int(request.form.get('no_seats'))
-                print(no_of_seats, current_user.id,'future')
 
                 new_reservation_obj = {
                     "res_label": "future",
@@ -161,7 +154,6 @@ def open_movie(movie_id):
             new_reservation = Reservation(user_id=new_reservation_obj['user_id'] , projection_id=new_reservation_obj['projection_id'], no_of_seats=new_reservation_obj['no_of_seats'], conf_date=new_reservation_obj['conf_date'])
             db.session.add(new_reservation)
             db.session.commit() 
-            print(new_reservation_obj['screen_id'])
 
             # update screen available slots 
             projection_to_be_updated = Projection.query.get(new_reservation_obj['projection_id'])
@@ -176,7 +168,7 @@ def open_movie(movie_id):
             new_reservation = Reservation(user_id=new_reservation_obj_today['user_id'] , projection_id=new_reservation_obj_today['projection_id'], no_of_seats=new_reservation_obj_today['no_of_seats'], conf_date=new_reservation_obj_today['conf_date'])
             db.session.add(new_reservation)
             db.session.commit() 
-            print(new_reservation_obj_today['screen_id'])
+
 
             # update screen available slots 
             projection_to_be_updated = Projection.query.get(new_reservation_obj_today['projection_id'])
