@@ -60,6 +60,8 @@
     width: 84vw;
     height: 25px;
     margin-right: 0.5vw;
+    margin-left: 1.5vw;
+    margin-top: 2vh;
 }
 
 #main_search_button{
@@ -68,7 +70,7 @@
     background-color: black;
     color: white;
     font-family: 'Russo One', sans-serif;
-    margin: 0 0 0 0;
+    margin: -5px 0 0 0;
     padding: 0 0 0 0;
     border: none;
 }
