@@ -81,7 +81,7 @@ def open_movie(movie_id):
     # now i want to go through every projection in order that i split in todays and future projections 
     for projection in projections:
 
-        if projection.date  >= datetime.today() and projection.date <= datetime.today().replace(hour=23, minute=59):
+        if projection.date  >= datetime.today().replace(hour=0, minute=1) and projection.date <= datetime.today().replace(hour=23, minute=59):
             
            # so here for each projection i query the current_screen that will be played 
             current_screen = Screen.query.get(projection.screen_id)
