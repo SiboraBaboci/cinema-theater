@@ -15,7 +15,7 @@ app = create_app()
 @app.route("/")
 @app.route("/main")
 def open_main():
-    today_projections = Projection.query.filter(and_(Projection.date<=datetime.today().replace(hour=23, minute=59) ), Projection.date>=datetime.today())                       
+    today_projections = Projection.query.filter(and_(Projection.date<=datetime.today().replace(hour=23, minute=59) ), Projection.date>=datetime.today().replace(hour=0, minute=1))                       
     today_projections_object = []              
     for projection in today_projections:
         current_movie = Movie.query.get(projection.movie_id)
