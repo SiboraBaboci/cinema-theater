@@ -20,10 +20,10 @@ Home
 
 <body class="overflow-auto">
 
-  <form id="main_search_container"> 
+
     <input id="main_search_form" type="search" placeholder="Insert movie title...">
     <button id="main_search_button" class="btn btn-primary" >Search</button>
-  </form>
+  
 
   <h1 class="main_heading">Movie screenings today {{current_date}}</h1>
 
@@ -36,7 +36,7 @@ Home
             <img class="card-img-top" src="{{projection.movie_img_str}}"  alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">{{projection.movie_title}}</h5>
-              <p>{{projection.projection_date}}</p>
+              <!-- <p>{{projection.projection_date}}</p> -->
               <button class="btn btn-dark w-100" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
              
             </div>
@@ -57,7 +57,7 @@ Home
           <img class="card-img-top" src="{{projection.movie_img_str}}"  alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">{{projection.movie_title}} </h5>
-            <p>{{projection.projection_date}}</p>
+            <!-- <p>{{projection.projection_date}}</p> -->
             <button class="btn btn-dark w-100" onclick="window.location.href = `/movie/{{projection.movie_id}}`">See movie details</button>
             
           </div>
