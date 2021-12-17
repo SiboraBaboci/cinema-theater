@@ -41,9 +41,7 @@ class User(db.Model, UserMixin):
     role = db.Column(db.Enum(UserRole), nullable=False)
     reservations = db.relationship(
         "Reservation", backref="user",lazy=True)
-    notes = db.relationship('Note')  #this tells flask and sqlalchemy 
-    #that everytime we create a note, add into this user's notes relationship that note id. 
-    #(this will be a list that will store all the different notes)
+    notes = db.relationship('Note') 
 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)

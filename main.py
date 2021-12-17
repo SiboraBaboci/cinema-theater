@@ -8,6 +8,7 @@ from sqlalchemy import func
 from sqlalchemy import *
 from datetime import date
 from sqlalchemy.orm import sessionmaker
+import time
 
 app = create_app()
 
@@ -15,7 +16,7 @@ app = create_app()
 @app.route("/")
 @app.route("/main")
 def open_main():
-    today_projections = Projection.query.filter(and_(Projection.date<=datetime.today().replace(hour=23, minute=59) ), Projection.date>=datetime.today().replace(hour=0, minute=1))                       
+    today_projections = Projection.query.filter(and_(Projection.date<=datetime.today().replace(hour=23, minute=59) ), Projection.date>=datetime.today())                       
     today_projections_object = []              
     for projection in today_projections:
         current_movie = Movie.query.get(projection.movie_id)
@@ -71,16 +72,16 @@ def open_movie(movie_id):
 
     # here i get all the projections of the movie that i am looking for  
     projections = Projection.query.filter_by(movie_id = movie_id)
+  
 
     today_projections = [] 
     future_projections = []
     
     new_reservation_obj = {}  
-    new_reservation_obj_today = {}  
 
     # now i want to go through every projection in order that i split in todays and future projections 
     for projection in projections:
-
+        
         if projection.date  >= datetime.today().replace(hour=0, minute=1) and projection.date <= datetime.today().replace(hour=23, minute=59):
             
            # so here for each projection i query the current_screen that will be played 
@@ -103,10 +104,14 @@ def open_movie(movie_id):
 
            # we store the  information needed for making a reservation, and here it is splitted into two part one today and one futur, and this one is if projection that is about to be reserved is today!
             no_of_seats = ''
-            if request.method == 'POST' and projection_dict['projection_date']  <= datetime.today():
+            if request.method == 'POST' and projection_dict['projection_date'] >= datetime.today().replace(hour=0, minute=1) and projection.date <= datetime.today().replace(hour=23, minute=59):
+                print(request.form.get("proj_date_today"))
+                print(request.form.get("proj_date"))
 
                 no_of_seats = int(request.form.get('no_seats'))
-                new_reservation_obj_today = {
+                # if projection_dict['projection_date'] == request.form.get("proj_date_today"):
+
+                new_reservation_obj = {
                     "res_label": "today",
                     "user_id": current_user.id,
                     "projection_id": projection.id,
@@ -133,8 +138,12 @@ def open_movie(movie_id):
 
             no_of_seats = ''
             if request.method == 'POST' and projection_dict['projection_date']  >= datetime.today():
+                print(request.form.get("proj_date_today"))
+                print(request.form.get("proj_date"))
 
                 no_of_seats = int(request.form.get('no_seats'))
+
+                # if projection_dict['projection_date'] == request.form.get("proj_date"):
 
                 new_reservation_obj = {
                     "res_label": "future",
@@ -149,6 +158,7 @@ def open_movie(movie_id):
 
     # after we get POST request and after we store the information above splitted into 2 groups now its time to actually get that data and store into database! 
     if request.method == 'POST':
+        time.sleep(1.4)
         if new_reservation_obj['res_label'] == 'future':
             # save to db if upcomming reservation 
             new_reservation = Reservation(user_id=new_reservation_obj['user_id'] , projection_id=new_reservation_obj['projection_id'], no_of_seats=new_reservation_obj['no_of_seats'], conf_date=new_reservation_obj['conf_date'])
@@ -163,16 +173,16 @@ def open_movie(movie_id):
             flash('Reservation saved.', category = 'success')
             return redirect(url_for('open_customer'))
 
-        if new_reservation_obj_today['res_label'] == 'today':
+        if new_reservation_obj['res_label'] == 'today':
             # save to db if upcomming reservation 
-            new_reservation = Reservation(user_id=new_reservation_obj_today['user_id'] , projection_id=new_reservation_obj_today['projection_id'], no_of_seats=new_reservation_obj_today['no_of_seats'], conf_date=new_reservation_obj_today['conf_date'])
+            new_reservation = Reservation(user_id=new_reservation_obj['user_id'] , projection_id=new_reservation_obj['projection_id'], no_of_seats=new_reservation_obj['no_of_seats'], conf_date=new_reservation_obj['conf_date'])
             db.session.add(new_reservation)
             db.session.commit() 
 
 
             # update screen available slots 
-            projection_to_be_updated = Projection.query.get(new_reservation_obj_today['projection_id'])
-            projection_to_be_updated.available_slots = new_reservation_obj_today['projection_available_slots'] - new_reservation_obj_today['no_of_seats'] 
+            projection_to_be_updated = Projection.query.get(new_reservation_obj['projection_id'])
+            projection_to_be_updated.available_slots = new_reservation_obj['projection_available_slots'] - new_reservation_obj['no_of_seats'] 
             db.session.commit()            
 
             flash('Reservation saved.', category = 'success')
@@ -216,7 +226,6 @@ def open_projections_reservations(projection_id):
     all_reservations = [] 
 
     for reservation in reservations:
-        current_user = User.query.get(reservation.user_id)
 
         reservation_obj = {
             "ID": reservation.id,

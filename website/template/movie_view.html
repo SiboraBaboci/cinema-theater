@@ -59,6 +59,7 @@
           <td>
             <form method="POST">
               <div class="input-group mb-3 w-75" method='POST'>
+                <input value="{{projection.projection_date}}" id="proj_date_today" name="proj_date_today" type="hidden">
                 <input type="number" min="1" max="{{projection.projection_available_slots}}" class="form-control" placeholder="Number of seats" id="no_seats" name="no_seats">
                 <div class="input-group-append">
                   <button class="btn btn-dark"  type="submit">Make reservation</button>
@@ -119,6 +120,7 @@
           <td>
             <form method="POST">
               <div class="input-group mb-3 w-75" method='POST'>
+                <input value="{{projection.projection_date}}" id="proj_date" name="proj_date" type="hidden">
                 <input type="number" min="1" max="{{projection.projection_available_slots}}" class="form-control" placeholder="Number of seats" id="no_seats" name="no_seats">
                 <div class="input-group-append">
                   <button class="btn btn-dark" type="submit">Make reservation</button>
